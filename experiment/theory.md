@@ -1,176 +1,82 @@
 # Theory
 
- The first step in the analysis of control system is to derive its mathematical model to understand the working of the complete system.
-			   
-**The Plant(Coupled-DC Motor-Generator set):**
-
-In a DC motor, an armature rotates inside a magnetic field.The basic working principle of a DC motor is based on the fact that whenever a current carrying conductor is placed inside a magnetic field, there will be mechanical force experienced by that conductor.All kinds of DC motors work under this principle. Hence for constructing a DC motor, it is essential to establish a magnetic field.The magnetic field is established by using a magnet. You can use different types of magnets – it may be an electromagnet or it can be a permanent magnet.A Permanent Magnet DC motor (PMDC motor) is a type of DC motor that uses a permanent magnet to create the magnetic field required for the operation of a DC motor.	
-
-<div align="center" >				
-<img alt=""  src="./gifs/dc motor gif.gif" style="width:36%;height:10%;">
+ The Process Control Simulator is a special-purpose analogue simulator employing integrated circuit operational amplifiers.
+				
+<div align="center">
+<img class="img-fluid"  src="./images/connection_diagram.png" alt="">    
 </div>
+
+<b style="color:blue">The Simulated Process</b>
 				
-**Mechanical Section:**
-
-It comprises of the experimental permanent magnet d.c. motor(approx. 8W) coupled to a small d.c. generator (approx. 2W), which serves the twin purposes of,
+The process comprises the following elements, any of which may be inserted or omitted from a complete process by the use of jumper leads. 
 				
-1. Electrical loading of the motor
+1 Simple lag of time constant 10 milliseconds or 1s
 
-2. Transient response signal pick-up.
-				
-Further, a slotted disk mounted on the common shaft produces 6 pulses per revolution through an opto- interrupter, which is used in a 4-digit speed display in r.p.m.The specifications of the main experimental d.c. motor are:
-				
-• Operating Voltage :12Vdc
+2 lags of time constant 10millseconds or 1s (each convertible by toggle switches to integrators of time constant 10 ms or 1s)
 
-• No Load Current: 0.09A
+1 distance- velocity lag of delay 10 milliseconds or 1 second, selected by a toggle switch 
 
-• Full Load Current: 1.0A
+1 inverter 
 
-• Torque: 30mN-m/ 300g-cm
+The time constants of all the above elements can be set by one toggle switch to slow (1s) or fast (10ms) mode.
+With these elements any of twelve different linear process characteristics of Type 0, 1 and 2 may be established.Every element produces a polarity inversion but the inverter may be included or not as necessary to produce the desired overall polarity.
+						
+<b style="color:blue">The Simulated Controller</b>
 
-**Permanent Magnet DC motor (PMDC motor):**
+The controller is of the PID type which generates a control signal of the type 
+						
+$$u = k_p[e(t)+ \frac{1}{T_i}\int_{0}^{t}e(\tau)d\tau + \dot{e}(t)]$$
 
-The field poles of this motor are essentially made of permanent magnet.A PMDC motor mainly consists of two parts.A stator and an armature. Here the stator which is a steel cylinder. The magnets are mounted in the inner periphery of this cylinder.The permanent magnets are mounted in such a way that the N-pole and S-pole of each magnet are alternatively faced towards armature as shown in the figure below.
-				
-<div align="center">				
-<img alt=""  src="./images/t1.png" style="width:30%;height:10%;">
-</div>				
-				
-**Working Principle:**
+The Controller comprises the following elements:
 
-The working principle of PMDC motor is just similar to the general working principle of DC motor.That is when a carrying conductor comes inside a magnetic field, a mechanical force will be experienced by the conductor and
-the direction of this force is governed by Fleming’s left hand rule.As in a permanent magnet DC motor, the armature is placed inside the magnetic field of a permanent magnet,the armature rotates in the direction of the generated force.Here each conductor of the armature experiences the mechanical force F = B.I.L Newton where, B is the magnetic field strength in Tesla (weber / m<sup>2</sup>),I is the current in Ampere flowing through that conductor and L is the length of the conductor in meter comes under the magnetic field.Each conductor of the armature experiences a force and the compilation of those forces produces a torque, which tends to rotate the armature.
-				
-<div align="center">				
-<img alt=""  src="./images/t2.png" style="width:45%;height:10%;">
+1 Set-value control of range &plusmn; 10 volts
+
+1 Comparing element 
+
+1 Integral action control scaled in integral action time T<sub>i</sub>
+
+1 Derivative action control scaled in derivative action time T<sub>d</sub>
+
+1 Proportional band control scaled in % proportional band PB = 100/K<sub>p</sub>
+
+The comparing element generates the deviation as the difference between the controlled condition and
+the set value and passes it to the three–term controller comprising the integral, derivatives, and proportional controls.To avoid problems due to integrator drift an OFF position is provided on the integral action control in which the integral term at held at zero.
+
+Meter Indicator: two center-zero meters indicate the set value (lower meter) and either the measured value or the deviation (upper meter} according to the switch position selected. The sense of the meters is arranged to ensure correct polarities according to the equation
+						
+<b>Deviation = Measured Value - Set Value</b>
+						
+<b style="color:blue">Proportional Control System Response</b>
+						
+Refer to Fig 1 the jumper E to H is connected to apply proportional control.At point A a square wave signal of amplitude 5V p-p and frequency about 0.05Hz is Injected into the system.Alternatively the SET VALUE DISTURBANCE from point X and the negative MEASURED VALUE from the point B are displayed on an oscilloscope ,
+with both PROCESS and CONTROLLER switches at FAST, and input signal frequency 1.0Hz.
+						
+The meter switched to DEVIATION or display from point C and changes in DEVIATION are noted as disturbances are applied.Final setting points of both MEASURED VALUE and DEVIATION are noted.Tests with a percentage PROPORTIONAL BAND set at 50 and then 5 are done. 
+						
+<b>Summary:</b>
+
+The system moves slowly towards the SET VALUE. When it has there exists a considerable DEVIATION. As the percentage PROPORTIONAL BAND is reduced, i.e,the gain of the system is increased, the steady state DEVIATION is reduced and the system settles with its MEASURED VALUE much closer to the SET VALUE.In order to reduce the steady state DEVIATION to zero, however, the gain must be increased to such a value that the system becomes completely unstable.A compromise gain level must be used which maintains, a steady state deviation signal.
+						
+The system response is shown below.
+						
+<div align="center">
+<img src="./images/pr.png" alt="" style="width:50%;height:40%">					  
 </div>
-				
-**D.C. Motor Model**
-				
-The schematic diagram of a d.c. motor is shown in above figure wherein the following notations are used
+						
+<b style="color:blue">Proportional Plus Integral Control:</b> 
 
-e<sub>a</sub> : Armature voltage (volts)
-i<sub>a</sub> : Armature current (amp.)
-R<sub>a</sub> : Armature resistance (ohms)
-L<sub>a</sub> : Armature inductance (henry)
-e<sub>b</sub> : Back emf (volts)
-i<sub>f</sub> : Field current (amp.)
-T<sub>M</sub> : Motor torque (newton-m)
-T<sub>L</sub> : Load torque (newton-m)
-&omega; : Angular velocity (rad/sec)
-J : Moment of inertia of the rotor including external loading if any (newton-m/rad/sec<sup>2</sup>)
-B : Viscous friction coefficient including external loading if any (newton-m/rad/sec)
-K<sub>T</sub> : Torque constant
-K<sub>b</sub> : Back emf constant				
-				
-Upper case notations E<sub>a</sub>, I<sub>a</sub>, E<sub>b</sub>, I<sub>f</sub>are used for steady state values of the respective variables e<sub>a</sub>, i<sub>a</sub>, e<sub>b</sub> and i<sub>f</sub>				
-				
-In the present set-up a permanent magnet d.c. motor is used, the field winding is thus absent and the air gap flux is constant.The input drive may therefore be applied to the armature only, that is, only armature controlled operation is possible.
+The jumper D to G is connected for integral action.A square wave of 5V p-p or 1.0 Hz is applied to the SET VALUE DISTURBANCE socket X . The proportional band control is adjusted to 50 and it is adjusted until the system settles with about four overshoots only after each disturbance.Continuous oscillation should commence at a value of about 12.DEVIATION socket C is monitored and the setting on INTEGRAL ACTION control is slowly reduced until DEVIATION falls to zero after each disturbance.The number of overshoots before it settles are noted.The output of the integrator socket D when the system has settled is noted.The difference between MEASURED and SET VALUE is noted. The INTEGRAL ACTION control is reduced to 10 and the responses of system is noted.
 
-The mathematical equations in this operating mode are, 
-				
-$$T_M = K_T I_a$$
-				
-$$e_b = K_b \omega$$
-				
-Armature circuit model
-				
-$$L_a\frac{di_a}{dt} + R_a i_a + e_b = e_a$$
-				
-Mechanical model
-				
-$$J\frac{d\omega}{dt} + B\omega + T_L = T_M $$
-				
-Taking Laplace Transform and rearranging the terms,
-				
-$$\frac{\omega(s)}{E_a(s)} = \frac{K_T}{(sL_a + R_a)(sJ + B) + K_T K_b}$$
-				
-Assuming the inductance of the armature circuit to be very small, the motor transfer function may be written as, 
-				
-$$G_M(s) = \frac{\omega(s)}{E_a(s)} = \frac{K_T/R_a}{Js + B + \frac{K_T K_b}{R_a}} = \frac{K_M}{s\tau_m + 1}$$
-				
-Motor Gain Constant(K<sub>M</sub>)
-				
-$$K_M = \frac{K_T}{R_a B + K_T K_b}$$
-				
-Motor Time Constant
-				
-$$\tau_m = \frac{R_a J}{R_a B + K_T K_b}$$
-				
-				
-The armature controlled motor therefore has a first order type-0 transfer function and the two constant K<sub>M</sub> and &tau;<sub>m</sub>depend upon motor parameters.
-				
-**Torque – Speed Curves**
-				
-As a mechanical actuator the magnitude of the steady state torque produced by the motor with a given armature voltage is of interest to an user. With a simple rearrangement of terms the motor torque may be written as,
-				
-steady state armature current
-				
-$$I_a = \frac{E_a-E_b}{R_a} = \frac{E_a}{R_a} - \frac{K_b \omega}{R_a}$$
-				
-steady state torque generated<br>
-				
-$$T_M = K_T I_a = \frac{-K_T K_b}{R_a}\omega + \frac{K_T}{R_a}E_a$$
-				
-Here T<sub>M</sub>, E<sub>a</sub>, E<sub>b</sub>, I<sub>a</sub> and &omega; are the steady state values of the motor torque, applied armature voltage, back emf, armature current and angular velocity of the shaft.
-A typical plot of the above equation is shown in Fig below. This assumes a linear torque-speed behaviour
-								
-As the motor runs at constant speed,Electrical power input, P<sub>in</sub> = E<sub>a</sub> x I<sub>a</sub> watts Power lost in
+<b>Summary:</b> By suitable adjustment of the integrator time constant the steady state DEVIATION can be reduced to zero. In consequence the MEASURED VALUE becomes much closer to SET VALUE.Too much integral term however causes the system to go into oscillation. Generally speaking an increase in the integral term reduces steady state deviation but increases the time the system takes to settle. 
 
- R<sub>a</sub> = R<sub>a</sub> x I<sub>a</sub> x I<sub>a</sub>
+<b style="color:blue">Proportional + Integral+ Derivative Control:</b> 
 
-Power available in the armature,
+Derivative Control: As was seen, integral control improves the performance of the control system in some respects, i.e., reduces steady state DEVIATION, but has the disadvantage of slowing down the overall response time.If a system was required to follow a sudden change in SET VALUE this would give rise to rapid change in the DEVIATION. Although this deviation change is rapid the system responds rather slowly, so if at this time controller output could be boosted ,the speed of system response could be improved. If the deviation was differentiated i.e. its rate of change measured, and a signal produced proportional to this and then added to the signals from the proportional and integrator sections, some improvement should result.
+						
+All switches and controls as in Fig l are set,the jumper for all the control actions are connected.A square wave input of 5V p-p or 1.0Hz is applied to the SET VALUE DISTERBANCE socket .INTEGRAL ACTION is adjusted until steady state deviation is zero. After a disturbance the steady state deviation and number of overshoots are noted before the system settles.The DERIVATIVE ACTION control is slowly increased and the effect this has upon the system response is noted. If this has any effect upon this steady state DEVIATION is also checked.
 
-P<sub>arm</sub> = (E<sub>a</sub> – I<sub>a</sub> R<sub>a</sub>) I<sub>a</sub>= E<sub>b</sub> x I<sub>a</sub>
+<b>Summary:</b> Application of the DERIVATIVE TERM does not have any effect upon the steady state deviation but does reduce the settling time by reducing the number of oscillation.
 
-= K<sub>b</sub> x &omega; x I<sub>a</sub>
-				
-Mechanical power developed,
-				
-$$P_mech = T_M \omega = K_T I_a \omega$$
-				
-Assuming 100% conversion of power from electrical input to mechanical output, the above two expressions can be equated to get
-				
-$$K_b(\frac{volts}{rad/s}) = K_T(\frac{N-m}{amp})$$
-				
-$$T_M = \frac{-K_b^2}{R_a}\omega + \frac{K_b}{R_a}E_a$$
-				
-When the motor is loaded, the speed decreases which reduces the back emf. This increases armature current ia so that the motor develops more torque in order to supply the load.
-				
-At steady state (&omega; = constant) the load torque equation must read as 
-				
-$$T_M = B_\omega + T_L$$
-
-TL : load torque
-				
-In the experimental work TL is increased in steps by loading the motor with the help of	the coupled generator and the values of T<sub>M</sub> and &omega; are recorded. While &omega; is computed from the speed N, in rpm, as displayed on the motor unit,the following expression is used to compute	the motor torque T<sub>M</sub> at a constant value of E<sub>a</sub>,
-
-$$T_M = K_T I_a = K_b I_a = \frac{E_b}{\omega} I_a = \frac{E_a - I_a R_a}{\omega}$$
-				
-<div align="center">				
-<img alt="" class="img-fluid" src="./images/t3.png" style="width:45%;height:10%;">
-</div>
-				
-Two motor parameters, B and K<sub>b</sub>, may therefore be determined from the Torque-Speed Characteristics obtained under steady state conditions or constant speed operation of the motor 
-				
-**Transient Response**
-				
-In response to a step input,
-				
-$$e_a(t) = E U(t), E_a(s) = \frac{1}{s}$$
-				
-the motor speed will follow the expression,
-				
-$$\omega(t)= E K_M (1- e^\frac{-t}{\tau_m})$$
-
-The step response is very similar to that of an RC circuit charging from a step voltage input.The parameters of interest EK<sub>M</sub> and &tau;<sub>m</sub> are indicated in Fig below. One can easily measure the steady state speed, N, and hence compute K<sub>M</sub>
-				
-$$K_M = \frac{N}{E}(rpm/volt) = \frac{\pi N}{30 E_a}$$
-				
-Measurement of &tau;<sub>m</sub>: the time taken by the motor speed to rise from zero and attain63.2% of ω<sub>ss</sub>,
-				
-<div align="center">				
-<img alt="" class="img-fluid" src="./images/t4.png" style="width:45%;height:10%;">
-</div>
+						
 						
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>								
