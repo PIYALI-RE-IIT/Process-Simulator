@@ -12,7 +12,7 @@ var flag;
 var axes = {};
 var vmaxs;  //in volt
 var tmaxs; // in msec  0.001; //in sec
-var voltperdiv,timeperdiv;	
+var voltperdiv,timeperdiv,peak,ss;	
 
 var vp;
 var posy1;
@@ -185,9 +185,9 @@ $(document).ready(function () {
         width: 100,
         height: 80,
         //cursor: pointer,
-        min:-2,
-        max: 2,
-        step:1,
+        min:-5,
+        max:5,
+        step:0.1,
         angleOffset: -125,
         angleArc: 250,
         
@@ -200,9 +200,9 @@ $(document).ready(function () {
         width: 100,
         height: 80,
         //cursor: pointer,
-        min:-2,
-        max: 2,
-        step:1,
+        min:-5,
+        max:5,
+        step:0.1,
         angleOffset: -125,
         angleArc: 250,
         
@@ -505,7 +505,7 @@ function sqrwv() {
         y[i] = (vp/2) * Math.sign( Math.sin(2 * 3.1415 * frqfng * x[i] + phsl * 3.1415 / 180));
 		
 		
-		console.log('i/p ='+y[i]);
+		//console.log('i/p ='+y[i]);
     }
 	
 	
@@ -643,7 +643,7 @@ function P_pb50() {
 
     var x = new Array(), y = new Array();  // x,y plotting variables
     var dt, tstart, tstop,count=50; 
-	var dataOPPoints=[];
+	var dataOPPoints=[], measured;
 
 /////for 50% band PB /////////////////////
 
@@ -653,7 +653,19 @@ function P_pb50() {
     tstart = 0;//-tmaxs; //in sec
     tstop = tmaxs;
     dt = (tstop - tstart) / (101 - 1);// time increment over N points
-
+	
+	/*var zeta = 0.4;
+	var wn = 0.5;
+	
+	
+	for (var i = 0; i < axes.N; i++) {
+        x[i] = tstart + i * dt;
+        //y[i] = (vp/2) * Math.sin(2 * 3.1415 * frqfng * x[i] + phsl * 3.1415 / 180);
+		y[i] = parseFloat(vp*(1-(((Math.exp(-(parseFloat(zeta*wn*i))))/(Math.sqrt(1-(parseFloat(Math.pow(zeta,2))))))*Math.sin(parseFloat(Math.sqrt(1-parseFloat(Math.pow(zeta,2)))*wn*i)+Math.acos(zeta)))));
+	dataOPPoints.push({x:(i), y:(y[i])});
+    }*/
+	
+	
     // create function 
     for (var t = 0; t < (axes.N/2); t++) {
 		
@@ -680,10 +692,10 @@ function P_pb50() {
 
 		x[t] = tstart + t * dt;
 	 y[t] = yop/2;
+	  
+	  measured = yop;
+	  
 	dataOPPoints.push({x:(t), y:(y[t])});
-	
-	measured = y[t];
-	console.log(yop);
 	
 	} 
 	
@@ -709,18 +721,24 @@ function P_pb50() {
 
 	var yop = math.multiply(vp,13289.03178642,j).re;
 		
-	x[t] = tstart + t * dt;
+	x[t] = tstart + t * dt ;
 	 y[t] = (-yop)/2;
+	 
 	
-	measured = y[t];
-	console.log(y[t]);	
+	//console.log(y[t]);	
 	dataOPPoints.push({x:(t), y:(y[t])});
 	} 
+	var sserr = math.subtract(vp,measured);
+	document.getElementById('sserr').value = sserr;
+	
 	///for test plot enlaged view
 	document.getElementById('plotbucket').style.display  = "block"; 
 document.getElementById('chartContainer').style.display  = "block"; 	
 	var chart = new CanvasJS.Chart("chartContainer",
     {
+		zoomEnabled: true,
+		 
+		  zoomType: "x",
       animationEnabled: true,
 		  animationDuration: 10000, 
 	  title:{
@@ -731,12 +749,13 @@ document.getElementById('chartContainer').style.display  = "block";
 	  axisX:{
         interlacedColor: "#B2F9FA",
         title: "Time(Sec)"
+		
       },
     axisY: [
 	      {/////output Y axis
             title: "Amp(v)",
-			
-			//maximum:0.03,
+			interval: 0.2,
+			maximum:5,
         },
 		
 		],
@@ -799,7 +818,7 @@ function P_pb200() {
 
     var x = new Array(), y = new Array();  // x,y plotting variables
     var dt, tstart, tstop,count=50; 
-	var dataOPPoints=[];
+	var dataOPPoints=[], measured;
 
 /////for 200% band PB /////////////////////
 
@@ -836,8 +855,12 @@ function P_pb200() {
 
 		x[t] = tstart + t * dt;
 	 y[t] = yop/2;
+	 
+	 
+	measured = yop;
+		  
 	dataOPPoints.push({x:(t), y:(y[t])});
-	console.log(yop);	
+		
 	} 
 	
 	for (var t=50; t< axes.N; t++) {
@@ -868,11 +891,18 @@ function P_pb200() {
 	console.log(y[t]);	
 	dataOPPoints.push({x:(t), y:(y[t])});
 	} 
+	
+	var sserr = math.subtract(vp,measured);
+	document.getElementById('sserr').value = sserr;
+	  
 	///for test plot enlaged view
 	document.getElementById('plotbucket').style.display  = "block"; 
 document.getElementById('chartContainer').style.display  = "block"; 	
 	var chart = new CanvasJS.Chart("chartContainer",
     {
+		zoomEnabled: true,
+		 
+		  zoomType: "x",
       animationEnabled: true,
 		  animationDuration: 10000, 
 	  title:{
@@ -888,7 +918,7 @@ document.getElementById('chartContainer').style.display  = "block";
 	      {/////output Y axis
             title: "Amp(v)",
 			
-			//maximum:0.03,
+			maximum:5,
         },
 		
 		],
@@ -951,7 +981,7 @@ function P_pb100() {///basically plant identification
 
     var x = new Array(), y = new Array();  // x,y plotting variables
     var dt, tstart, tstop,count=50; 
-	var dataOPPoints=[];
+	var dataOPPoints=[], measured;
 
 /////for 100% band PB,kp=1 /////////////////////
 
@@ -988,8 +1018,12 @@ function P_pb100() {///basically plant identification
 
 		x[t] = tstart + t * dt;
 	 y[t] = yop/2;
+	 
+	 
+	measured = yop;
+	  
 	dataOPPoints.push({x:(t), y:(y[t])});
-	console.log(yop);	
+	
 	} 
 	
 	for (var t=50; t< axes.N; t++) {
@@ -1020,11 +1054,19 @@ function P_pb100() {///basically plant identification
 	console.log(y[t]);	
 	dataOPPoints.push({x:(t), y:(y[t])});
 	} 
+	
+	
+	var sserr = math.subtract(vp,measured);
+	document.getElementById('sserr').value = sserr;
+  	
 	///for test plot enlaged view
 	document.getElementById('plotbucket').style.display  = "block"; 
 document.getElementById('chartContainer').style.display  = "block"; 	
 	var chart = new CanvasJS.Chart("chartContainer",
     {
+		zoomEnabled: true,
+		 
+		  zoomType: "x",
       animationEnabled: true,
 		  animationDuration: 10000, 
 	  title:{
@@ -1040,7 +1082,7 @@ document.getElementById('chartContainer').style.display  = "block";
 	      {/////output Y axis
             title: "Amp(v)",
 			
-			//maximum:0.03,
+			maximum:5,
         },
 		
 		],
@@ -1103,7 +1145,7 @@ function P_pb30() {
 
     var x = new Array(), y = new Array();  // x,y plotting variables
     var dt, tstart, tstop,count=50; 
-	var dataOPPoints=[];
+	var dataOPPoints=[], measured;
 
 /////for 30% band PB,kp=3.33 /////////////////////
 
@@ -1140,8 +1182,11 @@ function P_pb30() {
 
 		x[t] = tstart + t * dt;
 	 y[t] = yop/2;
+	measured = yop;
+	 	  
+	  
 	dataOPPoints.push({x:(t), y:(y[t])});
-	console.log(yop);	
+		
 	} 
 	
 	for (var t=50; t< axes.N; t++) {
@@ -1172,11 +1217,18 @@ function P_pb30() {
 	console.log(y[t]);	
 	dataOPPoints.push({x:(t), y:(y[t])});
 	} 
+	
+	var sserr = math.subtract(vp,measured);
+	document.getElementById('sserr').value = sserr;
+	
 	///for test plot enlaged view
 	document.getElementById('plotbucket').style.display  = "block"; 
 document.getElementById('chartContainer').style.display  = "block"; 	
 	var chart = new CanvasJS.Chart("chartContainer",
     {
+		zoomEnabled: true,
+		 
+		  zoomType: "x",
       animationEnabled: true,
 		  animationDuration: 10000, 
 	  title:{
@@ -1192,7 +1244,7 @@ document.getElementById('chartContainer').style.display  = "block";
 	      {/////output Y axis
             title: "Amp(v)",
 			
-			//maximum:0.03,
+			maximum:5,
         },
 		
 		],
@@ -1255,7 +1307,7 @@ function P_pb5() {
 
     var x = new Array(), y = new Array();  // x,y plotting variables
     var dt, tstart, tstop,count=50; 
-	var dataOPPoints=[];
+	var dataOPPoints=[], measured;
 
 /////for 5% band PB,kp=20 /////////////////////
 
@@ -1292,8 +1344,10 @@ function P_pb5() {
 
 		x[t] = tstart + t * dt;
 	 y[t] = yop/2*Math.sin(2*Math.PI*16.66*t);
-	dataOPPoints.push({x:(t), y:(y[t])});
-	console.log(yop);	
+	measured = yop;
+	 
+	dataOPPoints.push({x:(t), y:(y[t])});	
+		
 	} 
 	
 	for (var t=50; t< axes.N; t++) {
@@ -1324,11 +1378,18 @@ function P_pb5() {
 	console.log(y[t]);	
 	dataOPPoints.push({x:(t), y:(y[t])});
 	} 
+	
+	var sserr = math.subtract(vp,measured);
+	document.getElementById('sserr').value = sserr;
+	
 	///for test plot enlaged view
 	document.getElementById('plotbucket').style.display  = "block"; 
 document.getElementById('chartContainer').style.display  = "block"; 	
 	var chart = new CanvasJS.Chart("chartContainer",
     {
+		zoomEnabled: true,
+		 
+		  zoomType: "x",
       animationEnabled: true,
 		  animationDuration: 10000, 
 	  title:{
@@ -1344,7 +1405,7 @@ document.getElementById('chartContainer').style.display  = "block";
 	      {/////output Y axis
             title: "Amp(v)",
 			
-			//maximum:0.03,
+			maximum:5,
         },
 		
 		],
@@ -1408,7 +1469,7 @@ function PI_2() {
 
     var x = new Array(), y = new Array();  // x,y plotting variables
     var dt, tstart, tstop; 
-	var dataOPPoints=[];
+	var dataOPPoints=[], measured;
 
 /////for Ti=2,i.e. ki=kp/Ti=1 /////////////////////
 
@@ -1443,9 +1504,10 @@ function PI_2() {
 	 
 	 x[t] = tstart + t * dt;
 	 y[t] = parseFloat((output)/2);
+	measured = output;
+	 
 	dataOPPoints.push({x:(t), y:(y[t])});
 	
-	console.log(output);	
 	} 
 	
 	for (var t=50; t< axes.N; t++) {
@@ -1475,11 +1537,19 @@ function PI_2() {
 	
 	dataOPPoints.push({x:(t), y:(y[t])});
 	} 
+	
+	
+	var sserr = math.subtract(vp,measured);
+	document.getElementById('sserr').value = sserr;
+	
 	///for test plot enlaged view
 	document.getElementById('plotbucket').style.display  = "block"; 
 document.getElementById('chartContainer').style.display  = "block"; 	
 	var chart = new CanvasJS.Chart("chartContainer",
     {
+		zoomEnabled: true,
+		 
+		  zoomType: "x",
       animationEnabled: true,
 		  animationDuration: 10000, 
 	  title:{
@@ -1495,7 +1565,7 @@ document.getElementById('chartContainer').style.display  = "block";
 	      {/////output Y axis
             title: "Amp(v)",
 			
-			//maximum:0.03,
+			maximum:6,
         },
 		
 		],
@@ -1559,7 +1629,7 @@ function PI_5() {
 
     var x = new Array(), y = new Array();  // x,y plotting variables
     var dt, tstart, tstop; 
-	var dataOPPoints=[];
+	var dataOPPoints=[], measured;
 
 /////for Ti=5,i.e. ki=kp/Ti=0.4 /////////////////////
 
@@ -1594,9 +1664,10 @@ function PI_5() {
 	 
 	 x[t] = tstart + t * dt;
 	 y[t] = parseFloat((output)/2);
-	dataOPPoints.push({x:(t), y:(y[t])});
-	
-	console.log(output);	
+	measured = output;
+	 
+	dataOPPoints.push({x:(t), y:(y[t])});	
+		
 	} 
 	
 	for (var t=50; t< axes.N; t++) {
@@ -1626,11 +1697,19 @@ function PI_5() {
 	
 	dataOPPoints.push({x:(t), y:(y[t])});
 	} 
+	
+	
+	var sserr = math.subtract(vp,measured);
+	document.getElementById('sserr').value = sserr;
+	
 	///for test plot enlaged view
 	document.getElementById('plotbucket').style.display  = "block"; 
 document.getElementById('chartContainer').style.display  = "block"; 	
 	var chart = new CanvasJS.Chart("chartContainer",
     {
+		zoomEnabled: true,
+		 
+		  zoomType: "x",
       animationEnabled: true,
 		  animationDuration: 10000, 
 	  title:{
@@ -1646,7 +1725,7 @@ document.getElementById('chartContainer').style.display  = "block";
 	      {/////output Y axis
             title: "Amp(v)",
 			
-			//maximum:0.03,
+			maximum:6,
         },
 		
 		],
@@ -1709,7 +1788,7 @@ function PI_10() {
 
     var x = new Array(), y = new Array();  // x,y plotting variables
     var dt, tstart, tstop; 
-	var dataOPPoints=[];
+	var dataOPPoints=[], measured;
 
 /////for Ti=10,i.e. ki=kp/Ti=0.2 /////////////////////
 
@@ -1744,9 +1823,10 @@ function PI_10() {
 	 
 	 x[t] = tstart + t * dt;
 	 y[t] = parseFloat((output)/2);
-	dataOPPoints.push({x:(t), y:(y[t])});
+	measured = output;
+	 
+	dataOPPoints.push({x:(t), y:(y[t])});	
 	
-	console.log(output);	
 	} 
 	
 	for (var t=50; t< axes.N; t++) {
@@ -1775,12 +1855,19 @@ function PI_10() {
 	console.log(output);
 	
 	dataOPPoints.push({x:(t), y:(y[t])});
-	} 
+	}
+
+var sserr = math.subtract(vp,measured);
+	document.getElementById('sserr').value = sserr;	
+
 	///for test plot enlaged view
 	document.getElementById('plotbucket').style.display  = "block"; 
 document.getElementById('chartContainer').style.display  = "block"; 	
 	var chart = new CanvasJS.Chart("chartContainer",
     {
+		zoomEnabled: true,
+		 
+		  zoomType: "x",
       animationEnabled: true,
 		  animationDuration: 10000, 
 	  title:{
@@ -1859,7 +1946,7 @@ function PI_25() {
 
     var x = new Array(), y = new Array();  // x,y plotting variables
     var dt, tstart, tstop; 
-	var dataOPPoints=[];
+	var dataOPPoints=[], measured;
 
 /////for Ti=25,i.e. ki=kp/Ti=0.08 /////////////////////
 
@@ -1894,9 +1981,10 @@ function PI_25() {
 	 
 	 x[t] = tstart + t * dt;
 	 y[t] = parseFloat((output)/2);
-	dataOPPoints.push({x:(t), y:(y[t])});
+	measured = output;
+
+	dataOPPoints.push({x:(t), y:(y[t])});	
 	
-	console.log(output);	
 	} 
 	
 	for (var t=50; t< axes.N; t++) {
@@ -1925,12 +2013,20 @@ function PI_25() {
 	console.log(output);
 	
 	dataOPPoints.push({x:(t), y:(y[t])});
-	} 
+	}
+
+
+var sserr = math.subtract(vp,measured);
+	document.getElementById('sserr').value = sserr;	
+	
 	///for test plot enlaged view
 	document.getElementById('plotbucket').style.display  = "block"; 
 document.getElementById('chartContainer').style.display  = "block"; 	
 	var chart = new CanvasJS.Chart("chartContainer",
     {
+		zoomEnabled: true,
+		 
+		  zoomType: "x",
       animationEnabled: true,
 		  animationDuration: 10000, 
 	  title:{
@@ -1946,7 +2042,7 @@ document.getElementById('chartContainer').style.display  = "block";
 	      {/////output Y axis
             title: "Amp(v)",
 			
-			//maximum:0.03,
+			maximum:6,
         },
 		
 		],
@@ -2010,7 +2106,7 @@ function PID_2() {
 
     var x = new Array(), y = new Array();  // x,y plotting variables
     var dt, tstart, tstop; 
-	var dataOPPoints=[];
+	var dataOPPoints=[], measured;
 
 /////for Td=2,i.e. kd=kp*Td=4 /////////////////////
 
@@ -2045,9 +2141,10 @@ function PID_2() {
 	 
 	 x[t] = tstart + t * dt;
 	 y[t] = parseFloat((output)/2);
+	measured = output;
+	  
 	dataOPPoints.push({x:(t), y:(y[t])});
 	
-	console.log(output);	
 	} 
 	
 	for (var t=50; t< axes.N; t++) {
@@ -2077,11 +2174,18 @@ function PID_2() {
 	
 	//dataOPPoints.push({x:(t), y:(y[t])});
 	} 
+	
+	var sserr = math.subtract(vp,measured);
+	document.getElementById('sserr').value = sserr;
+	
 	///for test plot enlaged view
 	document.getElementById('plotbucket').style.display  = "block"; 
 document.getElementById('chartContainer').style.display  = "block"; 	
 	var chart = new CanvasJS.Chart("chartContainer",
     {
+		zoomEnabled: true,
+		 
+		  zoomType: "x",
       animationEnabled: true,
 		  animationDuration: 10000, 
 	  title:{
@@ -2097,7 +2201,7 @@ document.getElementById('chartContainer').style.display  = "block";
 	      {/////output Y axis
             title: "Amp(v)",
 			
-			//maximum:0.03,
+			maximum:6,
         },
 		
 		],
@@ -4172,355 +4276,20 @@ else if(document.getElementById('rr').src.match("./images/on.png")){
 
  }
 
-function simulate(){
+
+function calc(){
 	
-if( document.getElementById('testchk').value == 1){
+peak = document.getElementById('pv').value;
+ss   = document.getElementById('sv').value;
 	
-No_Load();
+document.getElementById('ov').value	= math.multiply(math.divide(math.subtract(peak,ss),ss),100);
 	
-}	
-else if( document.getElementById('testchk').value == 2){
-	
-loadtest();
 	
 }
-	
-}
-
-///////////////////////////////////////////////////////////////////////////////Table Creation//////////////////////////////////////////////////////////////////////////////////////
-/* 
- var tabrowindex = 0;
-var arr = [];
-var table;
-
-var chart;
-
-// var showAlert;
-//------------------------------------------------- Table Creation1 -----------------------------------------------//
-function createTable1() {
-
-
-    arr[0] = tabrowindex+1 ;
-    arr[1] = document.getElementById("Ea").value;
-    arr[2] = document.getElementById("motor_arm_current").value;
-    arr[3] = document.getElementById("motor_speed").value;
-	arr[4] = document.getElementById("Eg").value;
-	
-	table = document.getElementById("myTable");
-        
-    var row = table.insertRow(++tabrowindex);
-   
-    if (table.rows.length <= 50) {
-        
-         // Row increment
-        for (var q = 0; q < 5; q++) {
-
-            var cell = row.insertCell(q);
-            cell.innerHTML = arr[q];
-
-    }
-
-    }
-
-}    
- 
- 
-//------------------------------------------------- Table Creation2 -----------------------------------------------//
-function createTable2() {
-
-
-    arr[0] = tabrowindex+1 ;
-    arr[1] = document.getElementById("RL").value;
-    arr[2] = document.getElementById("motor_arm_current").value;
-	arr[3] = parseFloat(document.getElementById("motor_speed").value);
-    arr[4] = parseFloat(parseFloat(document.getElementById("motor_speed").value*2*Math.PI)/60);
-	arr[5] = parseFloat(arr[4]*Kb);
-	arr[6] = parseFloat(arr[5]/arr[4]);
-	arr[7] = parseFloat(Kb*arr[2]*Math.pow(10,-3));
-	
-	table = document.getElementById("myTableload");
-        
-    var row = table.insertRow(++tabrowindex);
-   
-    if (table.rows.length <= 50) {
-        
-         // Row increment
-        for (var q = 0; q < 8; q++) {
-
-            var cell = row.insertCell(q);
-            cell.innerHTML = arr[q];
-
-    }
-
-    }
-
-}     
- 
-  
-/////////////////////////////////////////////////////////////////////Plot creation Torque vs. Speed////////////////////////////////////////////////////////////////////////// 
-
-
-
-	var y = new Array();
-    var dataPoints1=[];
-	
-	
-	function plot1(){
-	 document.getElementById('plotbucket').style.display  = "block";
-	 
-	 document.getElementById('chartContainer').style.display  = "block";
-	 document.getElementById('chartContainer2').style.display  = "none";
-	 document.getElementById('chartContainer3').style.display  = "none";
-	 
-	 document.getElementById('result').style.display  = "block";
- 
-    var table1 = document.getElementById('myTable');
-    for (var tabrowindex1 = 1; tabrowindex1 < table1.rows.length; tabrowindex1++) {
-        var rwe1 = table1.rows[tabrowindex1].cells;
-
-        dataPoints1.push({x: parseFloat((rwe1[1].innerHTML)), y: parseFloat(rwe1[3].innerHTML)});
-    }
- 
-	
- 
-	var chart = new CanvasJS.Chart("chartContainer",
-    {
-      //animationEnabled: true,
-		  //animationDuration: 10000, 
-	  title:{
-      text: "Speed Vs. Ea Plot(Motor Characteristics) "
-	  
-      },
-	  
-	  axisX:
-	  
-	  {
-        interlacedColor: "#B2F9FA",
-        title: "Ea(Volts)"
-      },
-	  
-	  
-	  
-	  
-	  
-    axisY: 
-	      {// Y axis
-            title: "Speed(rpm)",
-			
-			//maximum:28,
-        },
-		
-		
-	data: [
-      {        
-        type: "line",
-		color:"109DB6",
-        dataPoints:dataPoints1
-	
-       },
-       
-      ]	
-	});
-
-	chart.render();
-	
-	document.getElementById("exportChart").style.display = "block";
-	document.getElementById("exportChart").addEventListener("click",function(){
-	chart.exportChart({format: "jpg"})});	
-	}
-	
-	
-	function plot2(){
-	 document.getElementById('plotbucket').style.display  = "block";
-	 
-	 document.getElementById('chartContainer2').style.display  = "block";
-	 document.getElementById('chartContainer').style.display  = "none";
-	 document.getElementById('chartContainer3').style.display  = "none";
-	 
-	 document.getElementById('result').style.display  = "block";
- 
-    var table1 = document.getElementById('myTable');
-    for (var tabrowindex1 = 1; tabrowindex1 < table1.rows.length; tabrowindex1++) {
-        var rwe1 = table1.rows[tabrowindex1].cells;
-
-        dataPoints1.push({x: parseFloat((rwe1[3].innerHTML)), y: parseFloat(rwe1[4].innerHTML)});
-    }
- 
-	
- 
-	var chart = new CanvasJS.Chart("chartContainer2",
-    {
-      //animationEnabled: true,
-		  //animationDuration: 10000, 
-	  title:{
-      text: "Eg Vs. Speed Plot(Generator Characteristics) "
-	  
-      },
-	  
-	  axisX:
-	  
-	  {
-        interlacedColor: "#B2F9FA",
-        title: "Speed(rpm)"
-      },
-	  
-	  
-	  
-	  
-	  
-    axisY: 
-	      {// Y axis
-            title: "Eg(Volts)",
-			
-			//maximum:28,
-        },
-		
-		
-	data: [
-      {        
-        type: "line",
-		color:"109DB6",
-        dataPoints:dataPoints1
-	
-       },
-       
-      ]	
-	});
-
-	chart.render();
-	
-	document.getElementById("exportChart").style.display = "block";
-	document.getElementById("exportChart").addEventListener("click",function(){
-	chart.exportChart({format: "jpg"})});	
-	}
-	
-	
-	
- 
- function plot3(){
-	 document.getElementById('plotbucket').style.display  = "block"; 
-	 
-	 document.getElementById('chartContainer3').style.display  = "block";
-	 document.getElementById('chartContainer').style.display  = "none";
-	 document.getElementById('chartContainer2').style.display  = "none";
-	 
-	 document.getElementById('result').style.display  = "block";
- 
-    var table1 = document.getElementById('myTableload');
-    for (var tabrowindex1 = 1; tabrowindex1 < table1.rows.length; tabrowindex1++) {
-        var rwe1 = table1.rows[tabrowindex1].cells;
-
-        dataPoints1.push({x: parseFloat((rwe1[3].innerHTML)), y: parseFloat(rwe1[7].innerHTML)});
-    }
- 
-	
- 
-	var chart = new CanvasJS.Chart("chartContainer3",
-    {
-      //animationEnabled: true,
-		  //animationDuration: 10000, 
-	  title:{
-      text: "Torque Vs. Speed "
-	  
-      },
-	  
-	  axisX:
-	  
-	  {
-        interlacedColor: "#B2F9FA",
-        title: "Speed(rpm)"
-      },
-	  
-	  
-	  
-	  
-	  
-    axisY: 
-	      {// Y axis
-            title: "TM(N-m)",
-			
-			//maximum:28,
-        },
-		
-		
-	data: [
-      {        
-        type: "line",
-		color:"109DB6",
-        dataPoints:dataPoints1
-	
-       },
-       
-      ]	
-	});
-
-	chart.render();
-	
-	document.getElementById("exportChart").style.display = "block";
-	document.getElementById("exportChart").addEventListener("click",function(){
-	chart.exportChart({format: "jpg"})});	
-	}
- 
- 
- function Tableshow1(){
-	 
-	document.getElementById('myTable').style.display = "block";
-	document.getElementById('myTableload').style.display = "none";
-	document.getElementById('vchkspan').style.display = "none";
-	 document.getElementById('testchk').value = "1";
-	 
- }
- 
- function Tableshow2(){
-	 
-	document.getElementById('myTableload').style.display = "block";
-	document.getElementById('vchkspan').style.display = "block";
-	document.getElementById('myTable').style.display = "none";
-	 document.getElementById('testchk').value = "2";
-	 
- }
- 
- function Tabled(){
-	 
-	if( document.getElementById('testchk').value == 1){
-		
-	createTable1();	
-		
-	}
-	 
-	else if( document.getElementById('testchk').value == 2){
-		
-	createTable2();	
-		
-	} 
-	 
-	 
-	 
-	 
- }*/
  
  
  
  
- 
- 
- function Refresh(){
-	 if(document.getElementById('testchk').value == 1){
-	var Dtable= document.getElementById('myTable');
-	 }
-	 else if(document.getElementById('testchk').value == 2){
-	var Dtable= document.getElementById('myTableload');
-	 }
-	var Trow = Dtable.rows.length;
-	for (var i= Trow-1;i>0;i--){
-
-	Dtable.deleteRow(i);
-	}
-	//Dtable.style.display="none";
-	tabrowindex=0;
-	dataPoints1 = [];
-	document.getElementById('plotbucket').style.display="none";
- }
  
  
  

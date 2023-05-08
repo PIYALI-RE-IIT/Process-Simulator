@@ -24,7 +24,6 @@
   <script  src="./js/process_simu.js">   </script>
   
   
-  
 	
  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.2.1/math.js"></script>
@@ -38,7 +37,7 @@
 
 <link rel="stylesheet" href="./css/process_simu.css">
 <link rel="stylesheet" href="./css/demo.css">
-
+<link rel="stylesheet" href="./css/piyuk.css">
 
 
   <style>
@@ -101,7 +100,7 @@
 
             </div><!--First col under 2nd row end-->
             <div class="col-md-6"><!--2nd col under 2nd row start-->
-                <p class="h1"> <b>Simulation</b> </p>
+                <p class="h1"> <b>Study and operation of the Process Simulator set up</b> </p>
             </div><!--2nd col under 2nd row end-->
             <div class="col-md-3"><!--3rd col under 2nd row start-->
 
@@ -114,8 +113,8 @@
         </div><!--3rd row under 1st container end-->
     </div><!--First Container under body tag end-->
     
-    <!--<div class="container p-3 my-5 text-primary text-center border"><!--2nd Container under body tag start--
-        <div class="row"!--First row under 2nd container start--
+    <div class="container p-3 my-5 text-primary text-center border"><!--2nd Container under body tag start-->
+        <div class="row"><!--First row under 2nd container start-->
 
             <ul class="nav nav-pills nav-justified">
                 <li class="nav-item">
@@ -147,8 +146,8 @@
                   </li>
 
               </ul>
-        </div>--First row under 2nd container end--
-    </div>--2nd Container under body tag end-->
+        </div><!--First row under 2nd container end-->
+    </div><!--2nd Container under body tag end-->
 	
     <div class="container p-3 my-5 text-left border"><!--3rd Container under body tag start-->
       <div class="row"><!--First row under 3rd container start-->
@@ -222,7 +221,7 @@
 	<div class="col-md-1"></div>
 	
 	
-		<div class="col-md-10" style="border:2px dotted #22B2E8">
+		<div class="col-md-5" style="border:2px dotted #22B2E8">
 				<span style="color:black;font-weight:bold;">OSCILLOSCOPE</span><br/>
 				
 				<center><canvas id="mycanvas" width="430" height="350"  style="border:1px solid #157DA4"></canvas></center>
@@ -249,7 +248,7 @@
 		</div>
 		
 		
-		<!--<div class="col-md-5" style="border:2px dotted #22B2E8; text-align:center">
+		<div class="col-md-5" style="border:2px dotted #22B2E8; text-align:center">
 		<span style="color:blue;font-weight:bold;">Observation</span><br/>
 		
 		
@@ -258,14 +257,23 @@
 				<input type="number" id="sserr" value="0" style="float:right;text-align:center"readOnly=readOnly><br/>
 				
 				<br/>
+				<span style="float:right;text-align:center">Enter Peak Value</span>
+				<input type="number" id="pv" value="0" style="float:right;text-align:center"><br/>
+				
+				<br/>
+				<span style="float:right;text-align:center">Enter Steady State Value</span>
+				<input type="number" id="sv" value="0" style="float:right;text-align:center"><br/>
+				
+				<br/>
 				<span style="float:right;text-align:center">Percentage Overshoot</span>
 				<input type="number" id="ov" value="0" style="float:right;text-align:center"readOnly=readOnly><br/>
 				
 				
 				<br/>
-				<span style="float:right;text-align:center">Settling Time(t<sub>s</sub>)</span>
-				<input type="number" id="ts" value="0" style="float:right;text-align:center"readOnly=readOnly>
-		</div>-->		
+				<button class="btn btn-success" id="calc" onclick="calc()">Calculate</button>
+				<!--<span style="float:right;text-align:center">Settling Time(t<sub>s</sub>)</span>
+				<input type="number" id="ts" value="0" style="float:right;text-align:center"readOnly=readOnly>-->
+		</div>		
 		
 		<div class="col-md-1"></div>
 		</div>
@@ -358,7 +366,7 @@
 				<div class="d-inline-flex p-2"> 
 				<div class="p-4 ">			   
 				  <input  type="range"  id="positionx" min="-360" max="360" step="90"  value="0" oninput="posix2chnge()"  style="cursor:pointer;">
-                    <input type="text" id="fq-knob"  value="500"  readOnly=false oninput="timepdiv()">
+                    <input type="text" id="fq-knob"  value="100"  readOnly=false oninput="timepdiv()">
 					<br/>
 					<label id="positnlabelx">Position-X</label>    
 					<br/>
@@ -611,7 +619,7 @@
 		
 	 
 			<div class="col-md-12">
-				<div id = "plotbucket" class="content-center" style="display:none; position: relative; border:3px solid blue;height:530px;width:823px ">
+				<div id = "plotbucket" class="content-center" style="display:none; position relative; border:3px solid blue;height:530px;width:823px ">
 				<button type="button" id="exportChart" class="btn btn-primary"  style="display:none;position:absolute;left:20%;">Download Plot</button>
 				<button type="button" id="result" class="btn btn-primary" onclick="Refresh()"  style="display:none;position:absolute;left:27%">OK</button><br/><br/>
 					<div id="chartContainer"  style="display:none; position:absolute; height: 50%; width: 40%;z-index:1 "></div>
@@ -650,7 +658,22 @@
   
   <script src="./js/jsPlumb.js"></script>	
 	<script src="./js/demo.js"> </script> 
-	 
+	 <!--<script type="text/javascript" src="./js/knob.js"></script>
+    <script type="text/javascript" src="./js/ui.js"></script>
+    <script type="text/javascript" src="./js/ui.el.js"></script>
+    <script type="text/javascript" src="./js/p1.js"></script>
+	<script type="text/javascript" src="./js/piyuk.js"></script>
+	
+	<!--<svg>
+              <filter id="dropshadow" height="150%" width="150%">
+                  <feGaussianBlur in="SourceAlpha" stdDeviation="2"/>
+                  <feOffset dx="0" dy="3" result="offsetblur"/>
+                  <feMerge>
+                      <feMergeNode/>
+                      <feMergeNode in="SourceGraphic"/>
+                  </feMerge>
+              </filter>
+          </svg>-->
 	
 </body><!--body tag end-->
 </html><!--html tag end-->
