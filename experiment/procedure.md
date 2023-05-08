@@ -19,7 +19,9 @@
 					 
 4. Apply 50 percent proportional band by rotating the 'proportional band' knob by clicking on the plus sign on it.
 
-5. Now click on 'Output' button to observe the output signal for that perticular proportional band.Channel-1 will show the input,Channel-2 will show the output and 'Dual' shows the both.Check output for 30,200,5 percent proportional band in same way.
+5. Now click on 'Output' button to observe the output signal for that perticular proportional band.Channel-1 will show the input,Channel-2 will show the output and 'Dual' shows the both.In the plot below zoom in the overshoot part of the curve by selecting that part. Enter the peak value and steady state value in respective input boxes.Click on'Calculate' button.Observe the Steady state Error,Percentage Overshoot.
+
+6. Check output for 30,200,5 percent proportional band in same way.
 					 
 
 <b style="color:blue">P-I Control</b>
@@ -32,7 +34,9 @@
 					 
 4. Apply 50 percent proportional band by rotating the 'proportional band' knob by clicking on the plus sign on it and apply integral time to 2 by rotating the 'Integral action' knob by clicking on the plus sign on it. 
 
-5. Now click on 'Output' button to observe the output signal for that perticular integral time.Channel-1 will show the input,Channel-2 will show the output and 'Dual' shows the both.Check output by setting integral time to 5,10,25 in same way.
+5. Now click on 'Output' button to observe the output signal for that perticular proportional band.Channel-1 will show the input,Channel-2 will show the output and 'Dual' shows the both.In the plot below zoom in the overshoot part of the curve by selecting that part. Enter the peak value and steady state value in respective input boxes.Click on'Calculate' button.Observe the Steady state Error,Percentage Overshoot.
+
+6. Check output by setting integral time to 5,10,25 in same way.
 					
 
 <b style="color:blue">P-I-D Control</b>
@@ -47,5 +51,7 @@ or deviation signal respectively in oscilloscope channel-2 alternatively.
 					 
 4. Apply 50 percent proportional band by rotating the 'proportional band' knob by clicking on the plus sign on it , apply integral time to 2 by rotating the 'Integral action' knob by clicking on the plus sign on it and apply derivative time to 2 by rotating the 'Derivative action' knob by clicking on the plus sign on it.
 
-5. Now click on 'Output' button to observe the output signal for that perticular derivative time.Channel-1 will show the input,Channel-2 will show the output and 'Dual' shows the both.Check the steady state error,percentage overshoot are decreased in the output after P-I-D Control.
+5. Now click on 'Output' button to observe the output signal for that perticular proportional band.Channel-1 will show the input,Channel-2 will show the output and 'Dual' shows the both.In the plot below zoom in the overshoot part of the curve by selecting that part. Enter the peak value and steady state value in respective input boxes.Click on'Calculate' button.Observe the Steady state Error,Percentage Overshoot.
+
+6. Check the steady state error,percentage overshoot are decreased in the output after P-I-D Control.
 		  
