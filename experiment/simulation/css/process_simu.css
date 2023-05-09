@@ -75,7 +75,53 @@ position: absolute;
     left: 77.4%;
 }
 
+#dial{
+    position: absolute;
+    width: 14%;
+    height: 11%;
+    top: 33%;
+    left: 12%;
+}
 
+#circle1{
+    position: relative;
+    width: 63%;
+    height: 63%;
+    top: -68.6%;
+    left: 15.4%;
+}
+
+#circle2{
+    position: relative;
+    width: 63%;
+    height: 63%;
+    top: -68.6%;
+    left: 15.4%;
+}
+
+#circle3{
+    position: relative;
+    width: 63%;
+    height: 63%;
+    top: -68.6%;
+    left: 15.4%;
+}
+
+#circle4{
+    position: relative;
+    width: 63%;
+    height: 63%;
+    top: -68.6%;
+    left: 15.4%;
+}
+
+#circle5{
+    position: relative;
+    width: 63%;
+    height: 63%;
+    top: -68.6%;
+    left: 15.4%;
+}
 
 table, th, td {
   border: 1px solid black;

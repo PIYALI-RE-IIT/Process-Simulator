@@ -100,7 +100,7 @@
 
             </div><!--First col under 2nd row end-->
             <div class="col-md-6"><!--2nd col under 2nd row start-->
-                <p class="h1"> <b>Simulation</b> </p>
+                <p class="h1"> <b>Study and operation of the Process Simulator set up</b> </p>
             </div><!--2nd col under 2nd row end-->
             <div class="col-md-3"><!--3rd col under 2nd row start-->
 
@@ -113,8 +113,8 @@
         </div><!--3rd row under 1st container end-->
     </div><!--First Container under body tag end-->
     
-    <!--<div class="container p-3 my-5 text-primary text-center border">--2nd Container under body tag start--
-        <div class="row">!--First row under 2nd container start--
+    <div class="container p-3 my-5 text-primary text-center border"><!--2nd Container under body tag start-->
+        <div class="row"><!--First row under 2nd container start-->
 
             <ul class="nav nav-pills nav-justified">
                 <li class="nav-item">
@@ -146,8 +146,8 @@
                   </li>
 
               </ul>
-        </div>!--First row under 2nd container end--
-    </div>!--2nd Container under body tag end-->
+        </div><!--First row under 2nd container end-->
+    </div><!--2nd Container under body tag end-->
 	
     <div class="container p-3 my-5 text-left border"><!--3rd Container under body tag start-->
       <div class="row"><!--First row under 3rd container start-->
@@ -167,13 +167,14 @@
 					 
 					 <li>Apply 50 percent proportional band by rotating the 'proportional band' knob by clicking on the plus sign on it. </li><br/>
 
-					 <li>Now click on 'Output' button to observe the output signal for that perticular proportional band.Channel-1 will show the input,
+					 <li>Now click on 'Output' button to observe the output signal and enlarged signal plot for that particular proportional band.Channel-1 will show the input,
 					 Channel-2 will show the output and 'Dual' shows the both.In the plot below zoom in the overshoot part of the
 					 curve by selecting that part. Enter the peak value and steady state value in respective input boxes.Click on
-					 'Calculate' button.Observe the Steady state Error,Percentage Overshoot.</li><br/>
+					 'Calculate' button.Observe the Steady state Error,Percentage Overshoot.Now delete connection 45-22 by clicking on the connection and connect 45-27. Now follow above 
+					 steps to observe the deviation signal. </li><br/>
 					 
 					 
-					 <li>Check output for 30,200,5 percent proportional band in same way.</li><br/>
+					 <li>Click on 'Clear' button each time after one observation.Check output and deviation for 30,200,5 percent proportional band in same way.</li><br/>
 					 
 					<br><br>
 					 
@@ -186,16 +187,16 @@
 					 
 					 <li>Click on "Square" button(twice) to observe input signal. Apply amplitude to 5v<sub>p-p</sub>,Frequency 1Hz. </li></br>
 					 
-					 <li>Apply 50 percent proportional band by rotating the 'proportional band' knob by clicking on the plus sign on it and apply integral time to 2 by
-					 rotating the 'Integral action' knob by clicking on the plus sign on it. </li><br/>
+					 <li>Apply integral time 2 by rotating the 'integral action' knob by clicking on the plus sign on it . </li><br/>
 
-					 <li>Now click on 'Output' button to observe the output signal for that perticular proportional band.Channel-1 will show the input,
+					 <li>Now click on 'Output' button to observe the output signal and the enlarged signal plot for that particular integral time.Channel-1 will show the input,
 					 Channel-2 will show the output and 'Dual' shows the both.In the plot below zoom in the overshoot part of the
 					 curve by selecting that part. Enter the peak value and steady state value in respective input boxes.Click on
-					 'Calculate' button.Observe the Steady state Error,Percentage Overshoot.</li><br/>
+					 'Calculate' button.Observe the Steady state Error,Percentage Overshoot.Now delete connection 45-22 by clicking on the connection and connect 45-27. Now follow above 
+					 steps to observe the deviation signal. </li><br/>
 					 
 					 
-					 <li>Check output by setting integral time to 5,10,25 in same way.</li><br/>
+					 <li>Click on 'Clear' button each time after one observation.Check output and deviation by setting integral time to 5,10,25 in same way.</li><br/>
 					
 					<br><br>
 					 
@@ -208,13 +209,13 @@
 					 
 					 <li>Click on "Square" button(twice) to observe input signal. Apply amplitude to 5v<sub>p-p</sub>,Frequency 1Hz. </li></br>
 					 
-					 <li>Apply 50 percent proportional band by rotating the 'proportional band' knob by clicking on the plus sign on it , apply integral time to 2 by
-					 rotating the 'Integral action' knob by clicking on the plus sign on it and apply derivative time to 2 by rotating the 'Derivative action' knob by clicking on the plus sign on it. </li><br/>
+					 <li>Apply derivative time to 2 by rotating the 'Derivative action' knob by clicking on the plus sign on it. </li><br/>
 
-					 <li>Now click on 'Output' button to observe the output signal for that perticular proportional band.Channel-1 will show the input,
+					 <li>Now click on 'Output' button to observe the output signal and the enlarged signal plot for that particular derivative time.Channel-1 will show the input,
 					 Channel-2 will show the output and 'Dual' shows the both.In the plot below zoom in the overshoot part of the
 					 curve by selecting that part. Enter the peak value and steady state value in respective input boxes.Click on
-					 'Calculate' button.Observe the Steady state Error,Percentage Overshoot.Check the steady state error,percentage overshoot are decreased in the output after P-I-D Control.</li><br/>
+					 'Calculate' button.Observe the Steady state Error,Percentage Overshoot.Now delete connection 45-22 by clicking on the connection and connect 45-27. Now follow above 
+					 steps to observe the deviation signal.Check the steady state error,percentage overshoot are decreased in the output after P-I-D Control.</li><br/>
 						
 
 
@@ -244,13 +245,13 @@
 
 				<div style="width:100%;border:2px dotted #22B2E8">
 				
-				 <button type="button" id="onff" onclick="mainswt()" value="off" class="btn btn-danger " >Power</button>
+				 <button type="button" id="onff" onclick="mainswt()" value="off" class="btn btn-danger " disabled=disabled>Power</button>
 				
 				<!--<button type="button" id="sin" onclick="drawsine()"  class="btn btn-success " >Sine</button>-->
 				<button type="button" id="sqr" onclick="drawsqr()"  class="btn btn-primary "disabled=disabled >Square</button>
 				<button type="button" id="sqrout" onclick="drawsqrout()"  class="btn btn-primary " disabled=disabled>Output</button>
 				<button type="button" id="in" onclick="drawsqr()"  class="btn btn-primary "disabled=disabled >Channel-1</button>
-				<button type="button" id="out" onclick="drawsqrout()"  class="btn btn-primary "disabled=disabled >Channel-2</button>
+				<button type="button" id="out" onclick="channel2()"  class="btn btn-primary "disabled=disabled >Channel-2</button>
 				<button type="button" id="inout" onclick="dual()"  class="btn btn-primary "disabled=disabled >Dual</button>
 				</div>
 	
@@ -283,6 +284,7 @@
 				
 				<br/>
 				<button class="btn btn-success" id="calc" onclick="calc()">Calculate</button>
+				<button class="btn btn-danger" id="clr" onclick="clr()">Clear</button>
 				<!--<span style="float:right;text-align:center">Settling Time(t<sub>s</sub>)</span>
 				<input type="number" id="ts" value="0" style="float:right;text-align:center"readOnly=readOnly>-->
 		</div>		
@@ -315,11 +317,15 @@
 							
 							<div class="d-inline-flex p-2">
 							<div class="p-4 " >                                
-							<div id="bd42"></div>
+							<div id="bd42"></div><br>
+							<img class="img-fluid " id="circle1" src="images/circle.png " />
+							42
 							</div>
 							
 							<div class="p-4 " >
-							<div id="bd43"></div>							
+							<div id="bd43"></div><br>
+							<img class="img-fluid " id="circle2" src="images/circle.png " />
+							43
 							</div>
 							
 							</div>
@@ -378,7 +384,7 @@
 				<div class="d-inline-flex p-2"> 
 				<div class="p-4 ">			   
 				  <input  type="range"  id="positionx" min="-360" max="360" step="90"  value="0" oninput="posix2chnge()"  style="cursor:pointer;">
-                    <input type="text" id="fq-knob"  value="100"  readOnly=false oninput="timepdiv()">
+                    <input type="text" id="fq-knob"  value="500"  readOnly=false oninput="timepdiv()">
 					<br/>
 					<label id="positnlabelx">Position-X</label>    
 					<br/>
@@ -389,15 +395,21 @@
 
 				<div class="d-inline-flex p-2">
 							<div class="p-4 " >                                
-							<div id="bd44"></div>
+							<div id="bd44"></div><br>
+							<img class="img-fluid " id="circle3" src="images/circle.png " />
+							44
 							</div>
 							
 							<div class="p-4 " >
-							<div id="bd45"></div>						
+							<div id="bd45"></div><br>
+							<img class="img-fluid " id="circle4" src="images/circle.png " />
+							45
 							</div>
 							
 							<div class="p-4 " >
-							<div id="bd46"></div>						
+							<div id="bd46"></div><br>
+							<img class="img-fluid " id="circle5" src="images/circle.png " />
+							46
 							</div>
 							
 							</div>				
@@ -464,9 +476,10 @@
 					<img class="img-fluid " id="mon" onclick="motoron()" src="images/off.png " />
 					<img class="img-fluid " id="pon" onclick="planton()" src="images/off.png " />
 					<img class="img-fluid " id="rr" onclick="rron()" src="images/off.png " />
-					<img class="img-fluid " id="rr2" onclick="rron()" src="images/off.png " />
-					<img class="img-fluid " id="li1" onclick="rron()" src="images/off.png " />
-					<img class="img-fluid " id="li2" onclick="rron()" src="images/off.png " />
+					<img class="img-fluid " id="rr2" onclick="rr2on()" src="images/off.png " />
+					<img class="img-fluid " id="li1" onclick="li1on()" src="images/off.png " />
+					<img class="img-fluid " id="li2" onclick="li2on()" src="images/off.png " />
+					<img class="img-fluid " id="dial"  src="images/dial.png " />
 				
 				<!---knob 1 1st col 1st row--------->
 		<div class="bluedot" id="knob1" style=" width:8%;height:12%;top:54%;left:65%;pointer-events:none;">
@@ -531,31 +544,7 @@
 				
 									
 					<button type="button" id="check"  class="btn btn-primary " >Check Connection</button>
-					<button type="button" onclick="Tabled()"  class="btn btn-primary " >Table</button>
 					
-					
-					<div class="dropdown btn-group">
-					  <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">Plot<span class="caret"></span></button>
-					  <ul class="dropdown-menu">
-					  <li><a style="text-align:center;color:#078CBE" onclick="plot1()">N Vs. E<sub>a</sub></a></li>
-					  <li><a style="text-align:center;color:#078CBE" onclick="plot2()">E<sub>g</sub>Vs. N</a></li>
-					  <li><a style="text-align:center;color:#078CBE" onclick="plot3()">T<sub>M</sub>Vs. N</a></li>
-					  </ul>
-					</div>
-				  
-					
-					
-					<!--<div class="dropdown btn-group">
-					<button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">Controller
-					<span class="caret"></span></button>
-					<ul class="dropdown-menu">
-					  <li><a style="text-align:center;color:#078CBE" onclick="">Proportional </a></li>
-					  <li><a style="text-align:center;color:#078CBE" onclick="">Proportional-Integral</a></li>
-					  <li><a style="text-align:center;color:#078CBE" onclick="">Proportional-Integral-Derivative</a></li>
-					  
-					</ul>
-				  </div>-->
-				  
 				  <input type="number" id="controllerchk" min="1" value="1" max="6" style="visibility:hidden;" >
 					
 					<!--<button type="button" id="refresh" onclick="Refresh()" class="btn btn-primary" >Clear</button>-->
@@ -565,78 +554,16 @@
 
  
         
-	<div class="row my-5 gy-2"><!--- 2nd row under fourth container start--->
-	
-		<div class="col-md-2 "></div><!--1st col under 2nd row start and end -->
-		
-			<div class="col-md-8 "><!--2nd col under 2nd row start -->	
-			
-				<div class="img-container"><!--img container div start--> 
-					  
-					
-							   </div>
-							   
-							   
-							
-				</div>
-		
-		<div class="col-md-2 "></div><!--3rd col under 2nd row start and end -->		
-			</div><!--- 2nd row under fourth container end--->	
-			
-			
-			<div class="row my-5 gy-2">
-	
-		<div class="col-md-1 "></div>
-        <div class="col-md-10 ">			
-		
-			<table id="myTable" style="display:none;width:100%">
-			
-				
-				  <tr>
-					<th>Sl No.</th>
-					<th>E<sub>a</sub>(Volts)</th> 
-					<th>I<sub>a</sub>(mA)</th>
-					<th>N(rpm)</th>
-					<th>E<sub>g</sub>(Volts)</th>					
-				  </tr>
-				  
-			</table>
-			
-			
-			
-			<span id="vchkspan" style="display:none"><b>For E<sub>a</sub> =</b> <input type="number" id="vchk" value="0"><b>v</b></span><br>
-			
-			<table id="myTableload" style="display:none;width:100%">
-			
-				
-				  <tr>
-					<th>Sl No.</th>
-					<th>Load Step</th> 
-					<th>I<sub>a</sub>(mA)</th>
-					<th>N(rpm)</th>
-					<th>w(rad/s)</th>
-					<th>E<sub>b</sub>(Volts)</th>
-					<th>K<sub>b</sub>(Volts/rad/s)</th>
-					<th>T<sub>M</sub>(N-m)</th>
-				  </tr>
-				  
-			</table>
-			
-		</div>
-		<div class="col-md-1 "></div>	
-			</div>
 
-
+			
 	 <div class="row justify-content-center"><!-----------------------graph T vs. w----------------------------------------->
 		
 	 
 			<div class="col-md-12">
-				<div id = "plotbucket" class="content-center" style="display:none; position: relative; border:3px solid blue;height:530px;width:823px ">
+				<div id = "plotbucket" class="content-center" style="display:none; position:relative; border:3px solid blue;height:530px;width:823px ">
 				<button type="button" id="exportChart" class="btn btn-primary"  style="display:none;position:absolute;left:20%;">Download Plot</button>
-				<button type="button" id="result" class="btn btn-primary" onclick="Refresh()"  style="display:none;position:absolute;left:27%">OK</button><br/><br/>
-					<div id="chartContainer"  style="display:none; position:absolute; height: 50%; width: 40%;z-index:1 "></div>
-					<div id="chartContainer2"  style="display:none; position:absolute; height: 50%; width: 40%;z-index:1 "></div>
-					<div id="chartContainer3"  style="display:none; position:absolute; height: 50%; width: 40%;z-index:1 "></div>
+				<br/><br/>
+					<div id="chartContainer"  style="display:none; position:absolute; height: 100%; width: 100%;z-index:1 "></div>
 					
 				</div>
 				

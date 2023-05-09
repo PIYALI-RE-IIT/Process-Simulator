@@ -631,6 +631,142 @@ function drawsqrout() {
 	}
 	
 }
+///Channel-2
+function channel2() {
+    canvas = document.getElementById("mycanvas");
+	if (null == canvas || !canvas.getContext)
+        return;
+    ctx = canvas.getContext("2d");
+    ctx.fillStyle = "white";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+		 ;
+		 //document.getElementById('sqr').disabled="true";
+		 //document.getElementById('tr1').style.display="none";
+		 //document.getElementById('tr2').style.display="block";
+		document.getElementById("in").disabled = false;
+        document.getElementById("out").disabled = false;
+        document.getElementById("inout").disabled = false;
+    drawGrid(ctx);
+    drawAxis();
+	
+	///now check which control is applied and how much are the kp ki kd values,acc to that output will be shown///
+	if(document.getElementById('controllerchk').value==1 && document.getElementById('P').value==50 ){
+	P_pb50();
+	document.getElementById('plotbucket').style.display ="none";
+	dataOPPoints = [];
+	}
+	if(document.getElementById('controllerchk').value==1 && document.getElementById('P').value==200 ){
+	P_pb200();
+	document.getElementById('plotbucket').style.display ="none";
+	dataOPPoints = [];	
+	}
+	if(document.getElementById('controllerchk').value==1 && document.getElementById('P').value==100 ){
+	P_pb100();	
+	document.getElementById('plotbucket').style.display ="none";
+	dataOPPoints = [];
+	}
+    if(document.getElementById('controllerchk').value==1 && document.getElementById('P').value==30 ){
+	P_pb30();	
+	document.getElementById('plotbucket').style.display ="none";
+	dataOPPoints = [];
+	}
+	if(document.getElementById('controllerchk').value==1 && document.getElementById('P').value==5 ){
+	P_pb5();	
+	document.getElementById('plotbucket').style.display ="none";
+	dataOPPoints = [];
+	}
+	
+	if(document.getElementById('controllerchk').value==2 && document.getElementById('I').value==2 ){
+	PI_2();	
+	document.getElementById('plotbucket').style.display ="none";
+	dataOPPoints = [];
+	}
+	if(document.getElementById('controllerchk').value==2 && document.getElementById('I').value==5 ){
+	PI_5();	
+	document.getElementById('plotbucket').style.display ="none";
+	dataOPPoints = [];
+	}
+	if(document.getElementById('controllerchk').value==2 && document.getElementById('I').value==10 ){
+	PI_10();	
+	document.getElementById('plotbucket').style.display ="none";
+	dataOPPoints = [];
+	}
+	if(document.getElementById('controllerchk').value==2 && document.getElementById('I').value==25 ){
+	PI_25();	
+	document.getElementById('plotbucket').style.display ="none";
+	dataOPPoints = [];
+	}
+	
+	if(document.getElementById('controllerchk').value==3 && document.getElementById('D').value==2 ){
+	PID_2();	
+	document.getElementById('plotbucket').style.display ="none";
+	dataOPPoints = [];
+	}
+	
+	///Deviation Signal
+	///P
+	if(document.getElementById('controllerchk').value==4 && document.getElementById('P').value==50 ){
+	deviation_P50();	
+	document.getElementById('plotbucket').style.display ="none";
+	dataOPPoints = [];
+	}
+	if(document.getElementById('controllerchk').value==4 && document.getElementById('P').value==200 ){
+	deviation_P200();	
+	document.getElementById('plotbucket').style.display ="none";
+	dataOPPoints = [];
+	}
+	if(document.getElementById('controllerchk').value==4 && document.getElementById('P').value==100 ){
+	deviation_P100();	
+	document.getElementById('plotbucket').style.display ="none";
+	dataOPPoints = [];
+	}
+    if(document.getElementById('controllerchk').value==4 && document.getElementById('P').value==30 ){
+	deviation_P30();	
+	document.getElementById('plotbucket').style.display ="none";
+	dataOPPoints = [];
+	}
+	if(document.getElementById('controllerchk').value==4 && document.getElementById('P').value==5 ){
+	deviation_P5();	
+	document.getElementById('plotbucket').style.display ="none";
+	dataOPPoints = [];
+	}
+	
+	///PI
+	if(document.getElementById('controllerchk').value==5 && document.getElementById('I').value==2 ){
+	deviation_PI2();	
+	document.getElementById('plotbucket').style.display ="none";
+	dataOPPoints = [];
+	}
+	if(document.getElementById('controllerchk').value==5 && document.getElementById('I').value==5 ){
+	deviation_PI5();	
+	document.getElementById('plotbucket').style.display ="none";
+	dataOPPoints = [];
+	}
+	if(document.getElementById('controllerchk').value==5 && document.getElementById('I').value==10 ){
+	deviation_PI10();	
+	document.getElementById('plotbucket').style.display ="none";
+	dataOPPoints = [];
+	}
+	if(document.getElementById('controllerchk').value==5 && document.getElementById('I').value==25 ){
+	deviation_PI25();	
+	document.getElementById('plotbucket').style.display ="none";
+	dataOPPoints = [];
+	}
+	
+	
+	///PID
+	if(document.getElementById('controllerchk').value==6 && document.getElementById('D').value==2 ){
+	deviation_PID2();	
+	document.getElementById('plotbucket').style.display ="none";
+	dataOPPoints = [];
+	}
+	
+}
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+var dataOPPoints=[];
 ///////////////////////////////////////////P CONTROLLERS//////////////////////////////////////////////////////////
 function P_pb50() {
 
@@ -643,7 +779,7 @@ function P_pb50() {
 
     var x = new Array(), y = new Array();  // x,y plotting variables
     var dt, tstart, tstop,count=50; 
-	var dataOPPoints=[], measured;
+	var  measured;
 
 /////for 50% band PB /////////////////////
 
@@ -742,7 +878,7 @@ document.getElementById('chartContainer').style.display  = "block";
       animationEnabled: true,
 		  animationDuration: 10000, 
 	  title:{
-      text: "test simu (v vs. sec) "
+      text: "Output Signal Enlarged View (v vs. sec) "
 	  
       },
 	  
@@ -771,7 +907,7 @@ document.getElementById('chartContainer').style.display  = "block";
 	});
 
 	chart.render();	
-	document.getElementById("result").style.display = "block";
+	//document.getElementById("result").style.display = "block";
 	document.getElementById("exportChart").style.display = "block";
 	document.getElementById("exportChart").addEventListener("click",function(){
 	chart.exportChart({format: "jpg"})});	
@@ -818,7 +954,7 @@ function P_pb200() {
 
     var x = new Array(), y = new Array();  // x,y plotting variables
     var dt, tstart, tstop,count=50; 
-	var dataOPPoints=[], measured;
+	var measured;
 
 /////for 200% band PB /////////////////////
 
@@ -906,7 +1042,7 @@ document.getElementById('chartContainer').style.display  = "block";
       animationEnabled: true,
 		  animationDuration: 10000, 
 	  title:{
-      text: "test simu (v vs. sec) "
+      text: "Output Signal Enlarged View (v vs. sec) "
 	  
       },
 	  
@@ -917,7 +1053,7 @@ document.getElementById('chartContainer').style.display  = "block";
     axisY: [
 	      {/////output Y axis
             title: "Amp(v)",
-			
+			interval: 0.2,
 			maximum:5,
         },
 		
@@ -934,7 +1070,7 @@ document.getElementById('chartContainer').style.display  = "block";
 	});
 
 	chart.render();	
-	document.getElementById("result").style.display = "block";
+	//document.getElementById("result").style.display = "block";
 	document.getElementById("exportChart").style.display = "block";
 	document.getElementById("exportChart").addEventListener("click",function(){
 	chart.exportChart({format: "jpg"})});	
@@ -981,7 +1117,7 @@ function P_pb100() {///basically plant identification
 
     var x = new Array(), y = new Array();  // x,y plotting variables
     var dt, tstart, tstop,count=50; 
-	var dataOPPoints=[], measured;
+	var  measured;
 
 /////for 100% band PB,kp=1 /////////////////////
 
@@ -1070,7 +1206,7 @@ document.getElementById('chartContainer').style.display  = "block";
       animationEnabled: true,
 		  animationDuration: 10000, 
 	  title:{
-      text: "test simu (v vs. sec) "
+      text: "Output Signal Enlarged View (v vs. sec) "
 	  
       },
 	  
@@ -1081,7 +1217,7 @@ document.getElementById('chartContainer').style.display  = "block";
     axisY: [
 	      {/////output Y axis
             title: "Amp(v)",
-			
+			interval: 0.2,
 			maximum:5,
         },
 		
@@ -1098,7 +1234,7 @@ document.getElementById('chartContainer').style.display  = "block";
 	});
 
 	chart.render();	
-	document.getElementById("result").style.display = "block";
+	//document.getElementById("result").style.display = "block";
 	document.getElementById("exportChart").style.display = "block";
 	document.getElementById("exportChart").addEventListener("click",function(){
 	chart.exportChart({format: "jpg"})});	
@@ -1145,7 +1281,7 @@ function P_pb30() {
 
     var x = new Array(), y = new Array();  // x,y plotting variables
     var dt, tstart, tstop,count=50; 
-	var dataOPPoints=[], measured;
+	var  measured;
 
 /////for 30% band PB,kp=3.33 /////////////////////
 
@@ -1232,7 +1368,7 @@ document.getElementById('chartContainer').style.display  = "block";
       animationEnabled: true,
 		  animationDuration: 10000, 
 	  title:{
-      text: "test simu (v vs. sec) "
+      text: "Output Signal Enlarged View (v vs. sec) "
 	  
       },
 	  
@@ -1243,7 +1379,7 @@ document.getElementById('chartContainer').style.display  = "block";
     axisY: [
 	      {/////output Y axis
             title: "Amp(v)",
-			
+			interval: 0.2,
 			maximum:5,
         },
 		
@@ -1260,7 +1396,7 @@ document.getElementById('chartContainer').style.display  = "block";
 	});
 
 	chart.render();	
-	document.getElementById("result").style.display = "block";
+	//document.getElementById("result").style.display = "block";
 	document.getElementById("exportChart").style.display = "block";
 	document.getElementById("exportChart").addEventListener("click",function(){
 	chart.exportChart({format: "jpg"})});	
@@ -1307,7 +1443,7 @@ function P_pb5() {
 
     var x = new Array(), y = new Array();  // x,y plotting variables
     var dt, tstart, tstop,count=50; 
-	var dataOPPoints=[], measured;
+	var  measured;
 
 /////for 5% band PB,kp=20 /////////////////////
 
@@ -1382,7 +1518,7 @@ function P_pb5() {
 	var sserr = math.subtract(vp,measured);
 	document.getElementById('sserr').value = sserr;
 	
-	///for test plot enlaged view
+	///for test plot enlarged view
 	document.getElementById('plotbucket').style.display  = "block"; 
 document.getElementById('chartContainer').style.display  = "block"; 	
 	var chart = new CanvasJS.Chart("chartContainer",
@@ -1393,7 +1529,7 @@ document.getElementById('chartContainer').style.display  = "block";
       animationEnabled: true,
 		  animationDuration: 10000, 
 	  title:{
-      text: "test simu (v vs. sec) "
+      text: "Output Signal Enlarged View (v vs. sec) "
 	  
       },
 	  
@@ -1404,7 +1540,7 @@ document.getElementById('chartContainer').style.display  = "block";
     axisY: [
 	      {/////output Y axis
             title: "Amp(v)",
-			
+			interval: 0.2,
 			maximum:5,
         },
 		
@@ -1421,7 +1557,7 @@ document.getElementById('chartContainer').style.display  = "block";
 	});
 
 	chart.render();	
-	document.getElementById("result").style.display = "block";
+	//document.getElementById("result").style.display = "block";
 	document.getElementById("exportChart").style.display = "block";
 	document.getElementById("exportChart").addEventListener("click",function(){
 	chart.exportChart({format: "jpg"})});	
@@ -1469,7 +1605,7 @@ function PI_2() {
 
     var x = new Array(), y = new Array();  // x,y plotting variables
     var dt, tstart, tstop; 
-	var dataOPPoints=[], measured;
+	var  measured;
 
 /////for Ti=2,i.e. ki=kp/Ti=1 /////////////////////
 
@@ -1553,7 +1689,7 @@ document.getElementById('chartContainer').style.display  = "block";
       animationEnabled: true,
 		  animationDuration: 10000, 
 	  title:{
-      text: "test simu PI(v vs. sec) "
+      text: "Output Signal Enlarged View (v vs. sec) "
 	  
       },
 	  
@@ -1564,7 +1700,7 @@ document.getElementById('chartContainer').style.display  = "block";
     axisY: [
 	      {/////output Y axis
             title: "Amp(v)",
-			
+			interval: 0.2,
 			maximum:6,
         },
 		
@@ -1581,7 +1717,7 @@ document.getElementById('chartContainer').style.display  = "block";
 	});
 
 	chart.render();	
-	document.getElementById("result").style.display = "block";
+	//document.getElementById("result").style.display = "block";
 	document.getElementById("exportChart").style.display = "block";
 	document.getElementById("exportChart").addEventListener("click",function(){
 	chart.exportChart({format: "jpg"})});	
@@ -1629,7 +1765,7 @@ function PI_5() {
 
     var x = new Array(), y = new Array();  // x,y plotting variables
     var dt, tstart, tstop; 
-	var dataOPPoints=[], measured;
+	var  measured;
 
 /////for Ti=5,i.e. ki=kp/Ti=0.4 /////////////////////
 
@@ -1713,7 +1849,7 @@ document.getElementById('chartContainer').style.display  = "block";
       animationEnabled: true,
 		  animationDuration: 10000, 
 	  title:{
-      text: "test simu PI(v vs. sec) "
+      text: "Output Signal Enlarged View (v vs. sec)"
 	  
       },
 	  
@@ -1724,7 +1860,7 @@ document.getElementById('chartContainer').style.display  = "block";
     axisY: [
 	      {/////output Y axis
             title: "Amp(v)",
-			
+			interval: 0.2,
 			maximum:6,
         },
 		
@@ -1741,7 +1877,7 @@ document.getElementById('chartContainer').style.display  = "block";
 	});
 
 	chart.render();	
-	document.getElementById("result").style.display = "block";
+	//document.getElementById("result").style.display = "block";
 	document.getElementById("exportChart").style.display = "block";
 	document.getElementById("exportChart").addEventListener("click",function(){
 	chart.exportChart({format: "jpg"})});	
@@ -1788,7 +1924,7 @@ function PI_10() {
 
     var x = new Array(), y = new Array();  // x,y plotting variables
     var dt, tstart, tstop; 
-	var dataOPPoints=[], measured;
+	var  measured;
 
 /////for Ti=10,i.e. ki=kp/Ti=0.2 /////////////////////
 
@@ -1871,7 +2007,7 @@ document.getElementById('chartContainer').style.display  = "block";
       animationEnabled: true,
 		  animationDuration: 10000, 
 	  title:{
-      text: "test simu PI(v vs. sec) "
+      text: "Output Signal Enlarged View (v vs. sec) "
 	  
       },
 	  
@@ -1882,8 +2018,8 @@ document.getElementById('chartContainer').style.display  = "block";
     axisY: [
 	      {/////output Y axis
             title: "Amp(v)",
-			
-			//maximum:0.03,
+			interval: 0.2,
+			maximum:6,
         },
 		
 		],
@@ -1899,7 +2035,7 @@ document.getElementById('chartContainer').style.display  = "block";
 	});
 
 	chart.render();	
-	document.getElementById("result").style.display = "block";
+	//document.getElementById("result").style.display = "block";
 	document.getElementById("exportChart").style.display = "block";
 	document.getElementById("exportChart").addEventListener("click",function(){
 	chart.exportChart({format: "jpg"})});	
@@ -1946,7 +2082,7 @@ function PI_25() {
 
     var x = new Array(), y = new Array();  // x,y plotting variables
     var dt, tstart, tstop; 
-	var dataOPPoints=[], measured;
+	var  measured;
 
 /////for Ti=25,i.e. ki=kp/Ti=0.08 /////////////////////
 
@@ -2030,7 +2166,7 @@ document.getElementById('chartContainer').style.display  = "block";
       animationEnabled: true,
 		  animationDuration: 10000, 
 	  title:{
-      text: "test simu PI(v vs. sec) "
+      text: "Output Signal Enlarged View (v vs. sec) "
 	  
       },
 	  
@@ -2041,7 +2177,7 @@ document.getElementById('chartContainer').style.display  = "block";
     axisY: [
 	      {/////output Y axis
             title: "Amp(v)",
-			
+			interval: 0.2,
 			maximum:6,
         },
 		
@@ -2058,7 +2194,7 @@ document.getElementById('chartContainer').style.display  = "block";
 	});
 
 	chart.render();	
-	document.getElementById("result").style.display = "block";
+	//document.getElementById("result").style.display = "block";
 	document.getElementById("exportChart").style.display = "block";
 	document.getElementById("exportChart").addEventListener("click",function(){
 	chart.exportChart({format: "jpg"})});	
@@ -2106,7 +2242,7 @@ function PID_2() {
 
     var x = new Array(), y = new Array();  // x,y plotting variables
     var dt, tstart, tstop; 
-	var dataOPPoints=[], measured;
+	var  measured;
 
 /////for Td=2,i.e. kd=kp*Td=4 /////////////////////
 
@@ -2189,7 +2325,7 @@ document.getElementById('chartContainer').style.display  = "block";
       animationEnabled: true,
 		  animationDuration: 10000, 
 	  title:{
-      text: "test simu PI(v vs. sec) "
+      text: "Output Signal Enlarged View (v vs. sec) "
 	  
       },
 	  
@@ -2200,7 +2336,7 @@ document.getElementById('chartContainer').style.display  = "block";
     axisY: [
 	      {/////output Y axis
             title: "Amp(v)",
-			
+			interval: 0.2,
 			maximum:6,
         },
 		
@@ -2217,7 +2353,7 @@ document.getElementById('chartContainer').style.display  = "block";
 	});
 
 	chart.render();	
-	document.getElementById("result").style.display = "block";
+	//document.getElementById("result").style.display = "block";
 	document.getElementById("exportChart").style.display = "block";
 	document.getElementById("exportChart").addEventListener("click",function(){
 	chart.exportChart({format: "jpg"})});	
@@ -2308,75 +2444,115 @@ ctx.lineTo(520,yp);
 
 ///now check which control is applied and how much are the kp ki kd values,acc to that output will be shown///
 	if(document.getElementById('controllerchk').value==1 && document.getElementById('P').value==50 ){
-	P_pb50();	
+	P_pb50();
+	document.getElementById('plotbucket').style.display ="none";
+	dataOPPoints = [];	
 	}
 	if(document.getElementById('controllerchk').value==1 && document.getElementById('P').value==200 ){
-	P_pb200();	
+	P_pb200();
+	document.getElementById('plotbucket').style.display ="none";
+	dataOPPoints = [];	
 	}
 	if(document.getElementById('controllerchk').value==1 && document.getElementById('P').value==100 ){
-	P_pb100();	
+	P_pb100();
+	document.getElementById('plotbucket').style.display ="none";
+	dataOPPoints = [];	
 	}
     if(document.getElementById('controllerchk').value==1 && document.getElementById('P').value==30 ){
-	P_pb30();	
+	P_pb30();
+	document.getElementById('plotbucket').style.display ="none";
+	dataOPPoints = [];	
 	}
 	if(document.getElementById('controllerchk').value==1 && document.getElementById('P').value==5 ){
-	P_pb5();	
+	P_pb5();
+	document.getElementById('plotbucket').style.display ="none";
+	dataOPPoints = [];	
 	}
 	
 	if(document.getElementById('controllerchk').value==2 && document.getElementById('I').value==2 ){
 	PI_2();	
+	document.getElementById('plotbucket').style.display ="none";
+	dataOPPoints = [];
 	}
 	if(document.getElementById('controllerchk').value==2 && document.getElementById('I').value==5 ){
 	PI_5();	
+	document.getElementById('plotbucket').style.display ="none";
+	dataOPPoints = [];
 	}
 	if(document.getElementById('controllerchk').value==2 && document.getElementById('I').value==10 ){
 	PI_10();	
+	document.getElementById('plotbucket').style.display ="none";
+	dataOPPoints = [];
 	}
 	if(document.getElementById('controllerchk').value==2 && document.getElementById('I').value==25 ){
 	PI_25();	
+	document.getElementById('plotbucket').style.display ="none";
+	dataOPPoints = [];
 	}
 	
 	if(document.getElementById('controllerchk').value==3 && document.getElementById('D').value==2 ){
 	PID_2();	
+	document.getElementById('plotbucket').style.display ="none";
+	dataOPPoints = [];
 	}	
 	
 	
 	///Deviation Signal
 	///P
 	if(document.getElementById('controllerchk').value==4 && document.getElementById('P').value==50 ){
-	deviation_P50();	
+	deviation_P50();
+	document.getElementById('plotbucket').style.display ="none";
+	dataOPPoints = [];
 	}
 	if(document.getElementById('controllerchk').value==4 && document.getElementById('P').value==200 ){
 	deviation_P200();	
+	document.getElementById('plotbucket').style.display ="none";
+	dataOPPoints = [];
 	}
 	if(document.getElementById('controllerchk').value==4 && document.getElementById('P').value==100 ){
-	deviation_P100();	
+	deviation_P100();
+    document.getElementById('plotbucket').style.display ="none";
+	dataOPPoints = [];	
 	}
     if(document.getElementById('controllerchk').value==4 && document.getElementById('P').value==30 ){
-	deviation_P30();	
+	deviation_P30();
+	document.getElementById('plotbucket').style.display ="none";
+	dataOPPoints = [];	
 	}
 	if(document.getElementById('controllerchk').value==4 && document.getElementById('P').value==5 ){
-	deviation_P5();	
+	deviation_P5();
+	document.getElementById('plotbucket').style.display ="none";
+	dataOPPoints = [];	
 	}
 	
 	///PI
 	if(document.getElementById('controllerchk').value==5 && document.getElementById('I').value==2 ){
-	deviation_PI2();	
+	deviation_PI2();
+	document.getElementById('plotbucket').style.display ="none";
+	dataOPPoints = [];	
 	}
 	if(document.getElementById('controllerchk').value==5 && document.getElementById('I').value==5 ){
-	deviation_PI5();	
+	deviation_PI5();
+	document.getElementById('plotbucket').style.display ="none";
+	dataOPPoints = [];	
 	}
 	if(document.getElementById('controllerchk').value==5 && document.getElementById('I').value==10 ){
-	deviation_PI10();	
+	deviation_PI10();
+	document.getElementById('plotbucket').style.display ="none";
+	dataOPPoints = [];	
 	}
 	if(document.getElementById('controllerchk').value==5 && document.getElementById('I').value==25 ){
-	deviation_PI25();	
+	deviation_PI25();
+	document.getElementById('plotbucket').style.display ="none";
+	dataOPPoints = [];	
 	}
 	
 	
 	///PID
 	if(document.getElementById('controllerchk').value==6 && document.getElementById('D').value==2 ){
-	deviation_PID2();	
+	deviation_PID2();
+	document.getElementById('plotbucket').style.display ="none";
+	dataOPPoints = [];	
 	}
 }
 
@@ -2392,7 +2568,7 @@ function deviation_P50(){
 
     var x = new Array(), y = new Array(),devi = new Array;  // x,y plotting variables
     var dt, tstart, tstop,count=50; 
-	var dataOPPoints=[];
+	
 
 /////for 50% band PB /////////////////////
 
@@ -2476,10 +2652,13 @@ function deviation_P50(){
 document.getElementById('chartContainer').style.display  = "block"; 	
 	var chart = new CanvasJS.Chart("chartContainer",
     {
+		zoomEnabled: true,
+		 
+		  zoomType: "x",
       animationEnabled: true,
 		  animationDuration: 10000, 
 	  title:{
-      text: "test simu (v vs. sec) "
+      text: "Deviation Signal Enlarged View (v vs. sec) "
 	  
       },
 	  
@@ -2490,8 +2669,8 @@ document.getElementById('chartContainer').style.display  = "block";
     axisY: [
 	      {/////output Y axis
             title: "Amp(v)",
-			
-			//maximum:0.03,
+			interval: 0.2,
+			maximum:5,
         },
 		
 		],
@@ -2507,7 +2686,7 @@ document.getElementById('chartContainer').style.display  = "block";
 	});
 
 	chart.render();	
-	document.getElementById("result").style.display = "block";
+	//document.getElementById("result").style.display = "block";
 	document.getElementById("exportChart").style.display = "block";
 	document.getElementById("exportChart").addEventListener("click",function(){
 	chart.exportChart({format: "jpg"})});	
@@ -2552,7 +2731,7 @@ function deviation_P100(){
 
     var x = new Array(), y = new Array(),devi = new Array;  // x,y plotting variables
     var dt, tstart, tstop,count=50; 
-	var dataOPPoints=[];
+	
 
 /////for 100% band PB,kp=1 /////////////////////
 
@@ -2636,10 +2815,13 @@ function deviation_P100(){
 document.getElementById('chartContainer').style.display  = "block"; 	
 	var chart = new CanvasJS.Chart("chartContainer",
     {
+		zoomEnabled: true,
+		 
+		  zoomType: "x",
       animationEnabled: true,
 		  animationDuration: 10000, 
 	  title:{
-      text: "test simu (v vs. sec) "
+      text: "Deviation Signal Enlarged View (v vs. sec) "
 	  
       },
 	  
@@ -2650,8 +2832,8 @@ document.getElementById('chartContainer').style.display  = "block";
     axisY: [
 	      {/////output Y axis
             title: "Amp(v)",
-			
-			//maximum:0.03,
+			interval: 0.2,
+			maximum:5,
         },
 		
 		],
@@ -2667,7 +2849,7 @@ document.getElementById('chartContainer').style.display  = "block";
 	});
 
 	chart.render();	
-	document.getElementById("result").style.display = "block";
+	//document.getElementById("result").style.display = "block";
 	document.getElementById("exportChart").style.display = "block";
 	document.getElementById("exportChart").addEventListener("click",function(){
 	chart.exportChart({format: "jpg"})});	
@@ -2714,7 +2896,7 @@ function deviation_P200(){
 
     var x = new Array(), y = new Array(),devi = new Array;  // x,y plotting variables
     var dt, tstart, tstop,count=50; 
-	var dataOPPoints=[];
+	
 
 /////for 200% band PB,kp=0.5 /////////////////////
 
@@ -2798,10 +2980,13 @@ function deviation_P200(){
 document.getElementById('chartContainer').style.display  = "block"; 	
 	var chart = new CanvasJS.Chart("chartContainer",
     {
+		zoomEnabled: true,
+		 
+		  zoomType: "x",
       animationEnabled: true,
 		  animationDuration: 10000, 
 	  title:{
-      text: "test simu (v vs. sec) "
+      text: "Deviation Signal Enlarged View (v vs. sec) "
 	  
       },
 	  
@@ -2812,8 +2997,8 @@ document.getElementById('chartContainer').style.display  = "block";
     axisY: [
 	      {/////output Y axis
             title: "Amp(v)",
-			
-			//maximum:0.03,
+			interval: 0.2,
+			maximum:5,
         },
 		
 		],
@@ -2829,7 +3014,7 @@ document.getElementById('chartContainer').style.display  = "block";
 	});
 
 	chart.render();	
-	document.getElementById("result").style.display = "block";
+	//document.getElementById("result").style.display = "block";
 	document.getElementById("exportChart").style.display = "block";
 	document.getElementById("exportChart").addEventListener("click",function(){
 	chart.exportChart({format: "jpg"})});	
@@ -2874,7 +3059,7 @@ function deviation_P30(){
 
     var x = new Array(), y = new Array(),devi = new Array;  // x,y plotting variables
     var dt, tstart, tstop,count=50; 
-	var dataOPPoints=[];
+	
 
 /////for 30% band PB,kp=3.33 /////////////////////
 
@@ -2958,10 +3143,13 @@ function deviation_P30(){
 document.getElementById('chartContainer').style.display  = "block"; 	
 	var chart = new CanvasJS.Chart("chartContainer",
     {
+		zoomEnabled: true,
+		 
+		  zoomType: "x",
       animationEnabled: true,
 		  animationDuration: 10000, 
 	  title:{
-      text: "test simu (v vs. sec) "
+      text: "Deviation Signal Enlarged View (v vs. sec) "
 	  
       },
 	  
@@ -2972,8 +3160,8 @@ document.getElementById('chartContainer').style.display  = "block";
     axisY: [
 	      {/////output Y axis
             title: "Amp(v)",
-			
-			//maximum:0.03,
+			interval: 0.2,
+			maximum:5,
         },
 		
 		],
@@ -2989,7 +3177,7 @@ document.getElementById('chartContainer').style.display  = "block";
 	});
 
 	chart.render();	
-	document.getElementById("result").style.display = "block";
+	//document.getElementById("result").style.display = "block";
 	document.getElementById("exportChart").style.display = "block";
 	document.getElementById("exportChart").addEventListener("click",function(){
 	chart.exportChart({format: "jpg"})});	
@@ -3034,7 +3222,7 @@ function deviation_P5(){
 
     var x = new Array(), y = new Array(),devi = new Array;  // x,y plotting variables
     var dt, tstart, tstop,count=50; 
-	var dataOPPoints=[];
+	
 
 /////for 5% band PB,kp=20 /////////////////////
 
@@ -3118,10 +3306,13 @@ function deviation_P5(){
 document.getElementById('chartContainer').style.display  = "block"; 	
 	var chart = new CanvasJS.Chart("chartContainer",
     {
+		zoomEnabled: true,
+		 
+		  zoomType: "x",
       animationEnabled: true,
 		  animationDuration: 10000, 
 	  title:{
-      text: "test simu (v vs. sec) "
+      text: "Deviation Signal Enlarged View (v vs. sec) "
 	  
       },
 	  
@@ -3132,8 +3323,8 @@ document.getElementById('chartContainer').style.display  = "block";
     axisY: [
 	      {/////output Y axis
             title: "Amp(v)",
-			
-			//maximum:0.03,
+			interval: 0.2,
+			maximum:5,
         },
 		
 		],
@@ -3149,7 +3340,7 @@ document.getElementById('chartContainer').style.display  = "block";
 	});
 
 	chart.render();	
-	document.getElementById("result").style.display = "block";
+	//document.getElementById("result").style.display = "block";
 	document.getElementById("exportChart").style.display = "block";
 	document.getElementById("exportChart").addEventListener("click",function(){
 	chart.exportChart({format: "jpg"})});	
@@ -3197,7 +3388,7 @@ function deviation_PI2() {
 
     var x = new Array(), y = new Array(),devi = new Array;  // x,y plotting variables
     var dt, tstart, tstop; 
-	var dataOPPoints=[];
+	
 
 /////for Ti=2,i.e. ki=kp/Ti=1 /////////////////////
 
@@ -3278,10 +3469,13 @@ function deviation_PI2() {
 document.getElementById('chartContainer').style.display  = "block"; 	
 	var chart = new CanvasJS.Chart("chartContainer",
     {
+		zoomEnabled: true,
+		 
+		  zoomType: "x",
       animationEnabled: true,
 		  animationDuration: 10000, 
 	  title:{
-      text: "test simu PI(v vs. sec) "
+      text: "Deviation Signal Enlarged View (v vs. sec) "
 	  
       },
 	  
@@ -3292,8 +3486,8 @@ document.getElementById('chartContainer').style.display  = "block";
     axisY: [
 	      {/////output Y axis
             title: "Amp(v)",
-			
-			//maximum:0.03,
+			interval: 0.2,
+			maximum:6,
         },
 		
 		],
@@ -3309,7 +3503,7 @@ document.getElementById('chartContainer').style.display  = "block";
 	});
 
 	chart.render();	
-	document.getElementById("result").style.display = "block";
+	//document.getElementById("result").style.display = "block";
 	document.getElementById("exportChart").style.display = "block";
 	document.getElementById("exportChart").addEventListener("click",function(){
 	chart.exportChart({format: "jpg"})});	
@@ -3356,7 +3550,7 @@ function deviation_PI5() {
 
     var x = new Array(), y = new Array(),devi = new Array;  // x,y plotting variables
     var dt, tstart, tstop; 
-	var dataOPPoints=[];
+	
 
 /////for Ti=5,i.e. ki=kp/Ti=0.4 /////////////////////
 
@@ -3438,10 +3632,13 @@ function deviation_PI5() {
 document.getElementById('chartContainer').style.display  = "block"; 	
 	var chart = new CanvasJS.Chart("chartContainer",
     {
+		zoomEnabled: true,
+		 
+		  zoomType: "x",
       animationEnabled: true,
 		  animationDuration: 10000, 
 	  title:{
-      text: "test simu PI(v vs. sec) "
+      text: "Deviation Signal Enlarged View (v vs. sec) "
 	  
       },
 	  
@@ -3452,8 +3649,8 @@ document.getElementById('chartContainer').style.display  = "block";
     axisY: [
 	      {/////output Y axis
             title: "Amp(v)",
-			
-			//maximum:0.03,
+			interval: 0.2,
+			maximum:6,
         },
 		
 		],
@@ -3469,7 +3666,7 @@ document.getElementById('chartContainer').style.display  = "block";
 	});
 
 	chart.render();	
-	document.getElementById("result").style.display = "block";
+	//document.getElementById("result").style.display = "block";
 	document.getElementById("exportChart").style.display = "block";
 	document.getElementById("exportChart").addEventListener("click",function(){
 	chart.exportChart({format: "jpg"})});	
@@ -3516,7 +3713,7 @@ function deviation_PI25() {
 
     var x = new Array(), y = new Array(),devi = new Array;  // x,y plotting variables
     var dt, tstart, tstop; 
-	var dataOPPoints=[];
+	
 
 /////for Ti=25,i.e. ki=kp/Ti=0.4 /////////////////////
 
@@ -3598,10 +3795,13 @@ function deviation_PI25() {
 document.getElementById('chartContainer').style.display  = "block"; 	
 	var chart = new CanvasJS.Chart("chartContainer",
     {
+		zoomEnabled: true,
+		 
+		  zoomType: "x",
       animationEnabled: true,
 		  animationDuration: 10000, 
 	  title:{
-      text: "test simu PI(v vs. sec) "
+      text: "Deviation Signal Enlarged View (v vs. sec) "
 	  
       },
 	  
@@ -3612,8 +3812,8 @@ document.getElementById('chartContainer').style.display  = "block";
     axisY: [
 	      {/////output Y axis
             title: "Amp(v)",
-			
-			//maximum:0.03,
+			interval: 0.2,
+			maximum:6,
         },
 		
 		],
@@ -3629,7 +3829,7 @@ document.getElementById('chartContainer').style.display  = "block";
 	});
 
 	chart.render();	
-	document.getElementById("result").style.display = "block";
+	//document.getElementById("result").style.display = "block";
 	document.getElementById("exportChart").style.display = "block";
 	document.getElementById("exportChart").addEventListener("click",function(){
 	chart.exportChart({format: "jpg"})});	
@@ -3677,7 +3877,7 @@ function deviation_PI10() {
 
     var x = new Array(), y = new Array(),devi = new Array;  // x,y plotting variables
     var dt, tstart, tstop; 
-	var dataOPPoints=[];
+	
 
 /////for Ti=10,i.e. ki=kp/Ti=0.2 /////////////////////
 
@@ -3759,10 +3959,13 @@ function deviation_PI10() {
 document.getElementById('chartContainer').style.display  = "block"; 	
 	var chart = new CanvasJS.Chart("chartContainer",
     {
+		zoomEnabled: true,
+		 
+		  zoomType: "x",
       animationEnabled: true,
 		  animationDuration: 10000, 
 	  title:{
-      text: "test simu PI(v vs. sec) "
+      text: "Deviation Signal Enlarged View (v vs. sec)"
 	  
       },
 	  
@@ -3773,8 +3976,8 @@ document.getElementById('chartContainer').style.display  = "block";
     axisY: [
 	      {/////output Y axis
             title: "Amp(v)",
-			
-			//maximum:0.03,
+			interval: 0.2,
+			maximum:6,
         },
 		
 		],
@@ -3790,7 +3993,7 @@ document.getElementById('chartContainer').style.display  = "block";
 	});
 
 	chart.render();	
-	document.getElementById("result").style.display = "block";
+	//document.getElementById("result").style.display = "block";
 	document.getElementById("exportChart").style.display = "block";
 	document.getElementById("exportChart").addEventListener("click",function(){
 	chart.exportChart({format: "jpg"})});	
@@ -3839,7 +4042,7 @@ function deviation_PID2() {
 
     var x = new Array(), y = new Array(),devi = new Array;  // x,y plotting variables
     var dt, tstart, tstop; 
-	var dataOPPoints=[];
+	
 
 /////for Td=2,i.e. kd=kp*Td=4 /////////////////////
 
@@ -3921,10 +4124,13 @@ function deviation_PID2() {
 document.getElementById('chartContainer').style.display  = "block"; 	
 	var chart = new CanvasJS.Chart("chartContainer",
     {
+		zoomEnabled: true,
+		 
+		  zoomType: "x",
       animationEnabled: true,
 		  animationDuration: 10000, 
 	  title:{
-      text: "test simu PI(v vs. sec) "
+      text: "Deviation Signal Enlarged View (v vs. sec) "
 	  
       },
 	  
@@ -3935,8 +4141,8 @@ document.getElementById('chartContainer').style.display  = "block";
     axisY: [
 	      {/////output Y axis
             title: "Amp(v)",
-			
-			//maximum:0.03,
+			interval: 0.2,
+			maximum:6,
         },
 		
 		],
@@ -3952,7 +4158,7 @@ document.getElementById('chartContainer').style.display  = "block";
 	});
 
 	chart.render();	
-	document.getElementById("result").style.display = "block";
+	//document.getElementById("result").style.display = "block";
 	document.getElementById("exportChart").style.display = "block";
 	document.getElementById("exportChart").addEventListener("click",function(){
 	chart.exportChart({format: "jpg"})});	
@@ -4172,7 +4378,7 @@ function rotate1(){
     
  }
 
- function rotate7(){
+ /*function rotate7(){
 	
 	angle4++;
 	
@@ -4214,15 +4420,8 @@ function rotate1(){
 	return;
    }
     
- }
- 
- 
- 
- 
- 
- 
- 
- 
+ }*/
+
  
  function planton(){
 	 
@@ -4241,21 +4440,16 @@ else if(document.getElementById('pon').src.match("./images/on.png")){
 
 function motoron(){
 	 
-	 if((document.getElementById('mon').src.match("./images/off.png")) && (document.getElementById('pon').src.match("./images/on.png")) ){
+	 if(document.getElementById('mon').src.match("./images/off.png")){
 	
 	document.getElementById('mon').src = "./images/on.png"; 
 	 
  }
  
- else if((document.getElementById('mon').src.match("./images/on.png")) && (document.getElementById('pon').src.match("./images/on.png")) ){
+ else if(document.getElementById('mon').src.match("./images/on.png")){
 	
 	document.getElementById('mon').src = "./images/off.png"; 
 	 
- }
-
-else if((document.getElementById('pon').src.match("./images/off.png"))&&(document.getElementById('pon').src.match("./images/off.png"))){
-	
-	alert('Switch on the Circuit first');
  }
 
  }
@@ -4277,6 +4471,56 @@ else if(document.getElementById('rr').src.match("./images/on.png")){
  }
 
 
+ function rr2on(){
+	 
+	 if(document.getElementById('rr2').src.match("./images/off.png")){
+	
+	document.getElementById('rr2').src = "./images/on.png";  
+	
+ }
+
+else if(document.getElementById('rr2').src.match("./images/on.png")){
+	
+	document.getElementById('rr2').src = "./images/off.png";  
+	 
+ }
+
+ }
+ 
+ function li1on(){
+	 
+	 if(document.getElementById('li1').src.match("./images/off.png")){
+	
+	document.getElementById('li1').src = "./images/on.png";  
+	
+ }
+
+else if(document.getElementById('li1').src.match("./images/on.png")){
+	
+	document.getElementById('li1').src = "./images/off.png";  
+	 
+ }
+
+ }
+ 
+ function li2on(){
+	 
+	 if(document.getElementById('li2').src.match("./images/off.png")){
+	
+	document.getElementById('li2').src = "./images/on.png";  
+	
+ }
+
+else if(document.getElementById('li2').src.match("./images/on.png")){
+	
+	document.getElementById('li2').src = "./images/off.png";  
+	 
+ }
+
+ }
+ 
+ 
+ 
 function calc(){
 	
 peak = document.getElementById('pv').value;
@@ -4287,7 +4531,18 @@ document.getElementById('ov').value	= math.multiply(math.divide(math.subtract(pe
 	
 }
  
- 
+ function clr(){
+	 
+	document.getElementById('sserr').value = 0;
+	document.getElementById('pv').value = 0;
+	document.getElementById('sv').value = 0;
+	document.getElementById('ov').value = 0;
+	dataOPPoints = [];
+	document.getElementById('plotbucket').style.display="none";	
+document.getElementById('chartContainer').style.display="none";	
+	 
+	 
+ }
  
  
  
