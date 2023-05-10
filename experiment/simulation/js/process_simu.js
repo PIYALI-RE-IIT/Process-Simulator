@@ -588,8 +588,12 @@ function drawsqrout() {
 	PI_25();	
 	}
 	
-	if(document.getElementById('controllerchk').value==3 && document.getElementById('D').value==2 ){
+	if(document.getElementById('controllerchk').value==3 && document.getElementById('P').value==50 && document.getElementById('I').value==2 && document.getElementById('D').value==2 ){
 	PID_2();	
+	}
+	
+	if(document.getElementById('controllerchk').value==3 && document.getElementById('P').value==50 && document.getElementById('I').value==2 && document.getElementById('D').value==1 ){
+	PID_1();	
 	}
 	
 	///Deviation Signal
@@ -626,8 +630,12 @@ function drawsqrout() {
 	
 	
 	///PID
-	if(document.getElementById('controllerchk').value==6 && document.getElementById('D').value==2 ){
+	if(document.getElementById('controllerchk').value==6 && document.getElementById('P').value==50 && document.getElementById('I').value==2 && document.getElementById('D').value==2 ){
 	deviation_PID2();	
+	}
+	
+	if(document.getElementById('controllerchk').value==6 && document.getElementById('P').value==50 && document.getElementById('I').value==2 && document.getElementById('D').value==1 ){
+	deviation_PID1();	
 	}
 	
 }
@@ -697,8 +705,14 @@ function channel2() {
 	dataOPPoints = [];
 	}
 	
-	if(document.getElementById('controllerchk').value==3 && document.getElementById('D').value==2 ){
+	if(document.getElementById('controllerchk').value==3 && document.getElementById('P').value==50 && document.getElementById('I').value==2 && document.getElementById('D').value==2 ){
 	PID_2();	
+	document.getElementById('plotbucket').style.display ="none";
+	dataOPPoints = [];
+	}
+	
+	if(document.getElementById('controllerchk').value==3 && document.getElementById('P').value==50 && document.getElementById('I').value==2 && document.getElementById('D').value==1 ){
+	PID_1();	
 	document.getElementById('plotbucket').style.display ="none";
 	dataOPPoints = [];
 	}
@@ -755,8 +769,14 @@ function channel2() {
 	
 	
 	///PID
-	if(document.getElementById('controllerchk').value==6 && document.getElementById('D').value==2 ){
+	if(document.getElementById('controllerchk').value==6 && document.getElementById('P').value==50 && document.getElementById('I').value==2 && document.getElementById('D').value==2 ){
 	deviation_PID2();	
+	document.getElementById('plotbucket').style.display ="none";
+	dataOPPoints = [];
+	}
+	
+	if(document.getElementById('controllerchk').value==6 && document.getElementById('P').value==50 && document.getElementById('I').value==2 && document.getElementById('D').value==1 ){
+	deviation_PID1();	
 	document.getElementById('plotbucket').style.display ="none";
 	dataOPPoints = [];
 	}
@@ -2389,6 +2409,142 @@ ctx.lineTo(520,yp);
 
 }
 
+
+function PID_1() {
+
+    vp = document.getElementById("amp-knob-fng").value;
+    frqfng = document.getElementById("fq-knob-fng").value;
+    phsl = document.getElementById("positionx").value;
+    posy1 = document.getElementById("positiony1").value;
+    tmaxs= document.getElementById("fq-knob").value*10*Math.pow(10,-3);
+//---------------------------------------------------------Square wave-------------------------------------------------------------------------------//
+
+    var x = new Array(), y = new Array();  // x,y plotting variables
+    var dt, tstart, tstop; 
+	var  measured;
+
+/////for Td=1,i.e. kd=kp*Td=2 /////////////////////
+
+	// time variables
+    flag = 1;
+    // define plot paramaters
+    tstart = 0;//-tmaxs; //in sec
+    tstop = tmaxs;
+    dt = (tstop - tstart) / (101 - 1);// time increment over N points
+
+    // create function 
+    for (var t = 0; t < axes.N/2; t++) {
+		
+	var d1 = math.multiply(-0.000149544,math.pow(math.e,math.multiply(-13374.5,t)));
+	var d2 = math.multiply(0.000152601,math.pow(math.e,math.multiply(-0.987061,t)));
+	var d3 = math.multiply(-0.000153557,math.pow(math.e,math.multiply(-0.503318,t)));
+	
+	var d4 = math.multiply(vp,6644.51589321,math.add(0.0001505,d1,d2,d3));
+	var output = d4;
+	 
+	 x[t] = tstart + t * dt;
+	 y[t] = parseFloat((output)/2);
+	measured = output;
+	  
+	dataOPPoints.push({x:(t), y:(y[t])});
+	
+	} 
+	
+	for (var t=50; t< axes.N; t++) {
+		
+	var d1 = math.multiply(-0.000149544,math.pow(math.e,math.multiply(-13374.5,t)));
+	var d2 = math.multiply(0.000152601,math.pow(math.e,math.multiply(-0.987061,t)));
+	var d3 = math.multiply(-0.000153557,math.pow(math.e,math.multiply(-0.503318,t)));
+	
+	var d4 = math.multiply(vp,6644.51589321,math.add(0.0001505,d1,d2,d3));
+	var output = d4;
+	 
+	 x[t] = tstart + t * dt;
+	 y[t] = parseFloat((-output)/2);
+	dataOPPoints.push({x:(t), y:(y[t])});
+	console.log(output);
+	
+	//dataOPPoints.push({x:(t), y:(y[t])});
+	} 
+	
+	var sserr = math.subtract(vp,measured);
+	document.getElementById('sserr').value = sserr;
+	
+	///for test plot enlaged view
+	document.getElementById('plotbucket').style.display  = "block"; 
+document.getElementById('chartContainer').style.display  = "block"; 	
+	var chart = new CanvasJS.Chart("chartContainer",
+    {
+		zoomEnabled: true,
+		 
+		  zoomType: "x",
+      animationEnabled: true,
+		  animationDuration: 10000, 
+	  title:{
+      text: "Output Signal Enlarged View (v vs. sec) "
+	  
+      },
+	  
+	  axisX:{
+        interlacedColor: "#B2F9FA",
+        title: "Time(Sec)"
+      },
+    axisY: [
+	      {/////output Y axis
+            title: "Amp(v)",
+			interval: 0.2,
+			maximum:6,
+        },
+		
+		],
+	data: [
+      {        
+        type: "spline",
+		color:"109DB6",
+        dataPoints:dataOPPoints
+	
+       },
+       
+      ]	
+	});
+
+	chart.render();	
+	//document.getElementById("result").style.display = "block";
+	document.getElementById("exportChart").style.display = "block";
+	document.getElementById("exportChart").addEventListener("click",function(){
+	chart.exportChart({format: "jpg"})});	
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+///oscilloscope grid view	
+    var i, x0, y0, xscale, yscale, xp, yp;
+
+    x0 = axes.x0;//260.5
+    y0 = axes.y0;//175.5
+    xscale = axes.xscale;//260000
+    yscale = axes.yscale;//87.5
+
+    ctx.beginPath();
+    ctx.lineWidth = 1.5;
+    ctx.strokeStyle = "red";
+    var p = y0 - parseInt(posy1) * yscale;
+    for (i = 0; i < axes.N; i++) {
+//if(x[i]>=0.06){
+	
+        // translate actual x,y to plot xp,yp
+        xp = x0 + x[i] * xscale;
+        yp = y0 - y[i] * yscale + p - 175;
+
+        // draw line to next point
+        if (i == 0)
+            ctx.moveTo(xp, yp);
+        else
+            ctx.lineTo(xp, yp);
+    }
+ctx.lineTo(520,yp);
+    ctx.stroke();
+
+}
+
 ///////Dual function////////////////
 
 function dual(){	
@@ -2490,12 +2646,17 @@ ctx.lineTo(520,yp);
 	dataOPPoints = [];
 	}
 	
-	if(document.getElementById('controllerchk').value==3 && document.getElementById('D').value==2 ){
+	if(document.getElementById('controllerchk').value==3 && document.getElementById('P').value==50 && document.getElementById('I').value==2 && document.getElementById('D').value==2 ){
 	PID_2();	
 	document.getElementById('plotbucket').style.display ="none";
 	dataOPPoints = [];
 	}	
 	
+	if(document.getElementById('controllerchk').value==3 && document.getElementById('P').value==50 && document.getElementById('I').value==2 && document.getElementById('D').value==1 ){
+	PID_1();	
+	document.getElementById('plotbucket').style.display ="none";
+	dataOPPoints = [];
+	}
 	
 	///Deviation Signal
 	///P
@@ -2549,8 +2710,14 @@ ctx.lineTo(520,yp);
 	
 	
 	///PID
-	if(document.getElementById('controllerchk').value==6 && document.getElementById('D').value==2 ){
+	if(document.getElementById('controllerchk').value==6 && document.getElementById('P').value==50 && document.getElementById('I').value==2 && document.getElementById('D').value==2 ){
 	deviation_PID2();
+	document.getElementById('plotbucket').style.display ="none";
+	dataOPPoints = [];	
+	}
+	
+	if(document.getElementById('controllerchk').value==6 && document.getElementById('P').value==50 && document.getElementById('I').value==2 && document.getElementById('D').value==1 ){
+	deviation_PID1();
 	document.getElementById('plotbucket').style.display ="none";
 	dataOPPoints = [];	
 	}
@@ -4194,7 +4361,150 @@ ctx.lineTo(520,yp);
 
 }
 
+function deviation_PID1() {
 
+    vp = document.getElementById("amp-knob-fng").value;
+    frqfng = document.getElementById("fq-knob-fng").value;
+    phsl = document.getElementById("positionx").value;
+    posy1 = document.getElementById("positiony1").value;
+    tmaxs= document.getElementById("fq-knob").value*10*Math.pow(10,-3);
+//---------------------------------------------------------Square wave-------------------------------------------------------------------------------//
+
+    var x = new Array(), y = new Array(),devi = new Array;  // x,y plotting variables
+    var dt, tstart, tstop; 
+	
+
+/////for Td=2,i.e. kd=kp*Td=4 /////////////////////
+
+	// time variables
+    flag = 1;
+    // define plot paramaters
+    tstart = 0;//-tmaxs; //in sec
+    tstop = tmaxs;
+    dt = (tstop - tstart) / (101 - 1);// time increment over N points
+
+    // create function 
+    for (var t = 0; t < axes.N/2; t++) {
+		
+	var d1 = math.multiply(-0.000149544,math.pow(math.e,math.multiply(-13374.5,t)));
+	var d2 = math.multiply(0.000152601,math.pow(math.e,math.multiply(-0.987061,t)));
+	var d3 = math.multiply(-0.000153557,math.pow(math.e,math.multiply(-0.503318,t)));
+	
+	var d4 = math.multiply(vp,6644.51589321,math.add(0.0001505,d1,d2,d3));
+	var output = d4;
+	 
+	 
+	
+	 
+	 x[t] = tstart + t * dt;
+	 y[t] = parseFloat((output)/2);
+	 
+	 var measured = y[t];
+	var set = (vp/2);
+	devi[t] = (measured-set);
+	
+	dataOPPoints.push({x:(t), y:(devi[t])});
+	console.log(devi[t]);
+		
+	} 
+	
+	for (var t=51; t< axes.N; t++) {
+		
+	var d1 = math.multiply(-0.000149544,math.pow(math.e,math.multiply(-13374.5,t)));
+	var d2 = math.multiply(0.000152601,math.pow(math.e,math.multiply(-0.987061,t)));
+	var d3 = math.multiply(-0.000153557,math.pow(math.e,math.multiply(-0.503318,t)));
+	
+	var d4 = math.multiply(vp,6644.51589321,math.add(0.0001505,d1,d2,d3));
+	var output = d4;
+	 
+	 
+	 
+	 x[t] = tstart + t * dt;
+	 y[t] = parseFloat((-output)/2);
+	 
+	var measured = y[t];
+	var set = (-vp/2);
+	devi[t] = (measured-set);
+	
+	dataOPPoints.push({x:(t), y:(devi[t])});
+	console.log(devi[t]);
+	
+	//dataOPPoints.push({x:(t), y:(y[t])});
+	} 
+	///for test plot enlaged view
+	document.getElementById('plotbucket').style.display  = "block"; 
+document.getElementById('chartContainer').style.display  = "block"; 	
+	var chart = new CanvasJS.Chart("chartContainer",
+    {
+		zoomEnabled: true,
+		 
+		  zoomType: "x",
+      animationEnabled: true,
+		  animationDuration: 10000, 
+	  title:{
+      text: "Deviation Signal Enlarged View (v vs. sec) "
+	  
+      },
+	  
+	  axisX:{
+        interlacedColor: "#B2F9FA",
+        title: "Time(Sec)"
+      },
+    axisY: [
+	      {/////output Y axis
+            title: "Amp(v)",
+			interval: 0.2,
+			maximum:6,
+        },
+		
+		],
+	data: [
+      {        
+        type: "spline",
+		color:"109DB6",
+        dataPoints:dataOPPoints
+	
+       },
+       
+      ]	
+	});
+
+	chart.render();	
+	//document.getElementById("result").style.display = "block";
+	document.getElementById("exportChart").style.display = "block";
+	document.getElementById("exportChart").addEventListener("click",function(){
+	chart.exportChart({format: "jpg"})});	
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+///oscilloscope grid view	
+    var i, x0, y0, xscale, yscale, xp, yp;
+
+    x0 = axes.x0;//260.5
+    y0 = axes.y0;//175.5
+    xscale = axes.xscale;//260000
+    yscale = axes.yscale;//87.5
+
+    ctx.beginPath();
+    ctx.lineWidth = 1.5;
+    ctx.strokeStyle = "red";
+    var p = y0 - parseInt(posy1) * yscale;
+    for (i = 0; i < axes.N; i++) {
+//if(x[i]>=0.06){
+	
+        // translate actual x,y to plot xp,yp
+        xp = x0 + x[i] * xscale;
+        yp = y0 - devi[i] * yscale + p - 175;
+
+        // draw line to next point
+        if (i == 0)
+            ctx.moveTo(xp, yp);
+        else
+            ctx.lineTo(xp, yp);
+    }
+ctx.lineTo(520,yp);
+    ctx.stroke();
+
+}
 	
 /////////////////////////////////////////////ALL FUNCTIONS FOR ROTATING KNOBS///////////////////////////////////
 var angle1= 0,angle2= 0,angle3= 0,angle4= 0,angle5= 0,angle6= 0,angle7= 0,angle8= 0;
@@ -4339,7 +4649,7 @@ function rotate1(){
 	
 	angle3++;
 	
-	var deg = angle3*40;
+	var deg = angle3*50;
 	//alert(deg);
 	var knob3= document.getElementById('knob3');	
 	knob3.style.transform="rotate("+deg+"deg)";
@@ -4348,7 +4658,7 @@ function rotate1(){
    
   
    
-   if( deg>80){
+   if( deg>100){
 	alert('This is the highest value, can not rotate knob') ;  
 	knob3.style.transform=null; 
 	document.getElementById('D').value = 0;
@@ -4361,7 +4671,7 @@ function rotate1(){
 	
 	angle3--;
 	
-	var deg = angle3*40;
+	var deg = angle3*50;
 	//alert(deg);
 	var knob3= document.getElementById('knob3');	
 	knob3.style.transform="rotate("+deg+"deg)";

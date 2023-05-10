@@ -1011,7 +1011,7 @@ jsPlumb.ready(function () {
 			else if (is_connected_46_25 && is_connected_46_43 && is_connected_44_42 && is_connected_23_42 && is_connected_25_26 && is_connected_28_29 && is_connected_39_40 && is_connected_37_38 && is_connected_23_24 && is_connected_21_22 && is_connected_12_13 && is_connected_10_11 && is_connected_8_9 && is_connected_2_7 && is_connected_45_22 && is_connected_32_35 &&  is_connected_30_31 &&  is_connected_33_36 && !unallowed_connection_present ) {
 		       
 			   document.getElementById('controllerchk').value = 3;
-			   alert('Right Connection\nP-I-D Control');
+			   alert('Right Connection\nP-I-D Control\n Set Proportional band to 50%, Integral time to 2 and Derivative time to 2');
                document.getElementById("onff").disabled = false;
 				document. getElementById('sv').removeAttribute('readonly');
 				document. getElementById('pv').removeAttribute('readonly');			   
@@ -1043,7 +1043,7 @@ jsPlumb.ready(function () {
 			else if (is_connected_46_25 && is_connected_46_43 && is_connected_44_42 && is_connected_23_42 && is_connected_25_26 && is_connected_28_29 && is_connected_39_40 && is_connected_37_38 && is_connected_23_24 && is_connected_21_22 && is_connected_12_13 && is_connected_10_11 && is_connected_8_9 && is_connected_2_7 && is_connected_45_27 && is_connected_32_35 &&  is_connected_30_31 &&  is_connected_33_36 && !unallowed_connection_present ) {
 		       
 			   document.getElementById('controllerchk').value = 6;
-			   alert('Right Connection\nP-I-D Control');
+			   alert('Right Connection\nP-I-D Control\n Set Proportional band to 50%, Integral time to 2 and Derivative time to 2');
                document.getElementById("onff").disabled = false; 
 			   document. getElementById('sv').setAttribute('readonly','true');
 			document. getElementById('pv').setAttribute('readonly','true');
