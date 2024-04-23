@@ -82,6 +82,20 @@ position: absolute;
     top: 33%;
     left: 12%;
 }
+#pointer1{
+    position: absolute;
+    width: 5%;
+    /* height: 11%; */
+    top: 37%;
+    left: 16.5%;
+}
+#pointer2{
+    position: absolute;
+    width: 5%;
+    /* height: 11%; */
+    top: 34%;
+    left: 16.5%;
+}
 
 #circle1{
     position: relative;
