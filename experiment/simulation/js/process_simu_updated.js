@@ -262,6 +262,18 @@ function mainswt() {
     }
 }
 
+function led(){
+	if(document.getElementById('sw').src.match('./images/side_off.png')){
+		document.getElementById('sw').src = "./images/side_on.png";
+		document.getElementById('led').src = "./images/ledon.png";
+	}
+	else if(document.getElementById('sw').src.match('./images/side_on.png')){
+		document.getElementById('sw').src = "./images/side_off.png";
+		document.getElementById('led').src = "./images/ledoff.png";
+	}
+	
+}
+
 ////////////////////////////////////OSCILLOSCOPE GRID DRAW///////////////////////////////////////
 function drawAxis() {
 
